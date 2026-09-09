@@ -1,54 +1,38 @@
-'use client'
-import { useState } from 'react'
 import { cn }       from '@/lib/utils'
-
 export function Input({ label, error, iconStart, iconEnd, onIconEndClick, className, ...props }) {
-  const [focused, setFocused] = useState(false)
-
-  const inputStyle = {
-    width: '100%',
-    border: `1.5px solid ${error ? 'var(--color-danger)' : focused ? 'var(--color-brand-navy)' : 'var(--color-border-strong)'}`,
-    borderRadius: 12,
-    padding: '13px 16px',
-    paddingInlineEnd: iconStart ? 48 : 16,
-    paddingInlineStart: iconEnd ? 48 : 16,
-    fontSize: 14,
-    color: 'var(--color-ink)',
-    background: error ? 'var(--color-surface-error)' : focused ? 'var(--color-white)' : 'var(--color-surface-input)',
-    fontFamily: 'var(--font-family-base)',
-    outline: 'none',
-    boxShadow: focused ? `0 0 0 3px rgba(0,35,102,${error ? 0 : 0.10})` : error ? '0 0 0 3px rgba(229,62,62,0.12)' : 'none',
-    transition: 'all 150ms',
-    boxSizing: 'border-box',
-  }
-
   return (
-    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 7 }}>
+    <div className="flex w-full flex-col gap-2">
       {label && (
-        <label style={{ fontSize: 13.5, fontWeight: 600, color: 'var(--color-ink)', fontFamily: 'var(--font-family-base)' }}>
+        <label className="text-[13.5px] font-semibold text-ink font-family-base">
           {label}
         </label>
       )}
-      <div style={{ position: 'relative' }}>
+      <div className="relative">
         {iconStart && (
-          <span style={{ position: 'absolute', insetBlockStart: 0, insetBlockEnd: 0, insetInlineEnd: 14, display: 'flex', alignItems: 'center', color: 'var(--color-ink-faint)', pointerEvents: 'none' }}>
+          <span className="pointer-events-none absolute inset-y-0 start-3.5 flex items-center text-ink-faint">
             {iconStart}
           </span>
         )}
         <input
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-          style={inputStyle}
-          className={cn('placeholder:text-ink-placeholder', className)}
+          className={cn('box-border w-full rounded-xl border-[1.5px] px-4 py-[13px]',
+            'bg-surface-input font-sans text-sm text-ink outline-none',
+            'placeholder:text-ink-placeholder',
+            'transition-[border-color,background-color,box-shadow] duration-150',
+            'focus:border-brand-navy focus:bg-white focus:ring-[3px] focus:ring-brand-navy/10',
+            error
+            ? 'border-danger bg-surface-error focus:border-danger focus:ring-danger/12'
+            : 'border-border-strong',
+            iconStart ? 'ps-12' : '',
+            iconEnd ? 'pe-12' : '',
+            className
+          )}
           {...props}
         />
         {iconEnd && (
           <button
             type="button"
             onClick={onIconEndClick}
-            style={{ position: 'absolute', insetBlockStart: 0, insetBlockEnd: 0, insetInlineStart: 14, display: 'flex', alignItems: 'center', color: 'var(--color-ink-faint)', background: 'transparent', border: 'none', cursor: 'pointer', transition: 'color 150ms' }}
-            onMouseEnter={e => e.currentTarget.style.color = 'var(--color-ink-muted)'}
-            onMouseLeave={e => e.currentTarget.style.color = 'var(--color-ink-faint)'}
+            className="absolute inset-y-0 end-3.5 flex items-center border-0 bg-transparent text-ink-faint transition-colors duration-150 hover:text-ink-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy/30"
           >
             {iconEnd}
           </button>

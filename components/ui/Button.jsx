@@ -22,9 +22,10 @@ export function Button({ variant = 'primary', size = 'md', className, children, 
     <button
       className={cn(
         'inline-flex items-center justify-center gap-2 font-semibold font-sans',
-        'cursor-pointer transition-all duration-150 select-none whitespace-nowrap',
+        'cursor-pointer transition-[background-color,border-color,color,box-shadow,transform,opacity] duration-150 select-none whitespace-nowrap',
         'disabled:opacity-50 disabled:cursor-not-allowed',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy/30',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy/30 focus-visible:ring-offset-2',
+        'active:scale-[0.98]',
         VARIANTS[variant] ?? VARIANTS.primary,
         SIZES[size] ?? SIZES.md,
         className,
