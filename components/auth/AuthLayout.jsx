@@ -10,21 +10,10 @@ function BrandPanel() {
   return (
     <div className="auth-navy-panel">
       {/* Language toggle */}
-      <div style={{ display: 'flex', justifyContent: isRtl ? 'flex-start' : 'flex-end', position: 'relative', zIndex: 10 }}>
+      <div className={`relative z-10 flex ${isRtl ? 'justify-start' : 'justify-end'}`}>
         <button
           onClick={toggleLanguage}
-          style={{
-            display: 'flex', alignItems: 'center', gap: 6,
-            color: 'rgba(255,255,255,.85)',
-            background: 'rgba(255,255,255,.12)',
-            border: '1px solid rgba(255,255,255,.2)',
-            borderRadius: 99, padding: '8px 16px',
-            fontSize: 13, fontWeight: 600, cursor: 'pointer',
-            fontFamily: 'Alexandria, sans-serif',
-            transition: 'all 150ms',
-          }}
-          onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,.22)'}
-          onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,.12)'}
+          className="flex cursor-pointer items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-4 py-2 font-sans text-[13px] font-semibold text-white/85 transition-colors duration-150 hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
           aria-label={locale === 'ar' ? 'Switch to English' : 'التبديل إلى العربية'}
         >
           <Globe size={14} aria-hidden="true" />
@@ -34,31 +23,26 @@ function BrandPanel() {
       </div>
 
       {/* Center */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 40, textAlign: 'center', position: 'relative', zIndex: 10 }}>
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-center gap-10 text-center">
         {/* Logo box */}
-        <div style={{
-          background: 'rgba(255,255,255,.12)',
-          border: '1px solid rgba(255,255,255,.18)',
-          borderRadius: 28, padding: '28px 36px',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-        }}>
+        <div className="flex items-center justify-center rounded-[28px] border border-white/18 bg-white/10 px-9 py-7">
           <WathiqLogo responsive size="lg" />
         </div>
 
         {/* Brand text */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-          <h1 style={{ color: 'var(--color-white)', fontSize: 30, fontWeight: 800, lineHeight: 1.2, fontFamily: 'Alexandria, sans-serif', margin: 0 }}>
+        <div className="flex flex-col gap-3.5">
+          <h1 className="m-0 font-sans text-[30px] font-extrabold leading-[1.2] text-white">
             {t.dashboardTitle}
           </h1>
-          <p style={{ color: 'rgba(255,255,255,.62)', fontSize: 15, lineHeight: 1.7, fontFamily: 'Alexandria, sans-serif', margin: 0, maxWidth: 260, marginInline: 'auto' }}>
+           <p className="mx-auto m-0 max-w-[260px] font-sans text-[15px] leading-[1.7] text-white/60">
             {t.dashboardSub}
           </p>
         </div>
       </div>
 
       {/* Bottom dot */}
-      <div style={{ display: 'flex', justifyContent: 'center', position: 'relative', zIndex: 10 }}>
-        <div style={{ width: 10, height: 10, borderRadius: '50%', background: 'var(--color-brand-gold)' }} aria-hidden="true" />
+      <div className="relative z-10 flex justify-center">
+        <div className="size-2.5 rounded-full bg-brand-gold" aria-hidden="true" />
       </div>
     </div>
   )
