@@ -8,14 +8,30 @@ import { useLang } from '@/context/LanguageContext'
 import { requestOtp, verifyOtp } from '@/features/auth/services/authService'
 
 function VerifyOtpContent() {
-  const { t } = useLang(); const isRtl = t.dir === 'rtl'; const router = useRouter(); const params = useSearchParams()
+  const { t } = useLang(); const router = useRouter(); const params = useSearchParams()
   const email = params.get('email') || ''; const [code, setCode] = useState(''); const [loading, setLoading] = useState(false); const [resending, setResending] = useState(false); const [error, setError] = useState(''); const [seconds, setSeconds] = useState(0); const inputRef = useRef(null)
   useEffect(() => { inputRef.current?.focus() }, [])
   useEffect(() => { if (!seconds) return; const timer = setInterval(() => setSeconds(v => v - 1), 1000); return () => clearInterval(timer) }, [seconds])
-  const submit = async e => { e.preventDefault(); if (code.length !== 6) return; setLoading(true); setError(''); try { await verifyOtp(email, code); router.replace(new URLSearchParams(window.location.search).get('next') || '/dashboard') } catch (e) { setError(e.message) } finally { setLoading(false) } }
+  const submit = async e => {
+    e.preventDefault()
+    if (code.length !== 6) {
+      setError(t.errors.otpInvalid)
+      return
+    }
+    setLoading(true)
+    setError('')
+    try {
+      await verifyOtp(email, code)
+      router.replace(new URLSearchParams(window.location.search).get('next') || '/dashboard')
+    } catch (e) {
+      setError(e.message)
+    } finally {
+      setLoading(false)
+    }
+  }
   const resend = async () => { if (seconds || !email) return; setResending(true); setError(''); try { await requestOtp(email); setSeconds(60) } catch (e) { setError(e.message) } finally { setResending(false) } }
   return <AuthLayout>
-    <div className={`mb-9 ${isRtl ? 'text-right' : 'text-left'}`}>
+    <div className="mb-9 text-start">
       <h2 className="mb-2.5 font-sans text-[30px] font-bold leading-[1.2] text-ink">
         {t.otpTitle}
         </h2>
@@ -27,9 +43,7 @@ function VerifyOtpContent() {
     {error && (
    <div
      role="alert"
-     className={`mb-[18px] rounded-xl bg-danger-bg px-3.5 py-[11px] font-sans text-[13px] text-danger ${
-       isRtl ? 'text-right' : 'text-left'
-     }`}
+     className="mb-[18px] rounded-xl bg-danger-bg px-3.5 py-[11px] text-start font-sans text-[13px] text-danger"
    >
      {error}
    </div>
