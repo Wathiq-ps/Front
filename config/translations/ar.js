@@ -26,7 +26,16 @@
     errors: {
       emailRequired: 'البريد الإلكتروني مطلوب',
       emailInvalid: 'عنوان البريد الإلكتروني غير صالح',
+      otpRequestValidation: 'البريد الإلكتروني مطلوب.',
       otpInvalid: 'رمز التحقق يجب أن يكون 6 أرقام',
+      otpNotFound: 'لا يوجد رمز تحقق نشط لهذا البريد الإلكتروني. يرجى طلب رمز جديد.',
+      otpRequestFailed: 'تعذر إرسال رمز التحقق.',
+      otpVerifyFailed: 'رمز التحقق غير صحيح أو انتهت صلاحيته.',
+      otpVerifyValidation: 'البريد الإلكتروني ورمز التحقق مطلوبان.',
+      authApiNotConfigured: 'خدمة المصادقة غير مهيأة.',
+      authTokensMissing: 'تعذر إكمال تسجيل الدخول.',
+      authServiceUnavailable: 'تعذر الاتصال بخدمة المصادقة.',
+      generic: 'حدث خطأ غير متوقع.',
     },
 
     // Login

@@ -1,14 +1,24 @@
 export async function requestOtp(email) {
   const response = await fetch('/api/auth/otp/request', { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include', body: JSON.stringify({ email }) })
   const data = await response.json().catch(() => ({}))
-  if (!response.ok) { const error = new Error(data.message || 'Unable to send verification code.'); error.status = response.status; throw error }
+  if (!response.ok) {
+    const error = new Error(data.message || 'Unable to send verification code.')
+    error.status = response.status
+    error.code = data.code || 'OTP_REQUEST_FAILED'
+    throw error
+  }
   return data
 }
 
 export async function verifyOtp(email, code) {
   const response = await fetch('/api/auth/otp/verify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include', body: JSON.stringify({ email, code }) })
   const data = await response.json().catch(() => ({}))
-  if (!response.ok) { const error = new Error(data.message || 'Invalid verification code.'); error.status = response.status; throw error }
+  if (!response.ok) {
+    const error = new Error(data.message || 'Invalid verification code.')
+    error.status = response.status
+    error.code = data.code || 'OTP_VERIFY_FAILED'
+    throw error
+  }
   return data
 }
 

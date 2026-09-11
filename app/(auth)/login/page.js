@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/Input'
 import { Spinner } from '@/components/ui/Spinner'
 import { useLang } from '@/context/LanguageContext'
 import { requestOtp } from '@/features/auth/services/authService'
+import { getAuthErrorKey } from '@/features/auth/services/authErrors'
 
 export default function LoginPage() {
   const { t } = useLang()
@@ -18,7 +19,7 @@ export default function LoginPage() {
   const onSubmit = async ({ email }) => {
     setLoading(true); setApiError('')
     try { await requestOtp(email); router.push(`/verify-otp?email=${encodeURIComponent(email)}`) }
-    catch (e) { setApiError(e.message) } finally { setLoading(false) }
+    catch (e) { setApiError(getAuthErrorKey(e)) } finally { setLoading(false) }
   }
   return <AuthLayout>
     <div className="mb-9 text-start">
@@ -30,11 +31,11 @@ export default function LoginPage() {
       role="alert"
       className="mb-[18px] rounded-xl bg-danger-bg px-3.5 py-[11px] text-start font-sans text-[13px] text-danger"
       >
-        {apiError}
+        {t.errors[apiError] || t.errors.generic}
         </div>
       )}
     <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-[22px]">
-      <Input label={t.email} type="email" placeholder={t.emailPh} iconStart={<Mail size={17} />} error={errors.email?.message} {...register('email', { required: t.errors.emailRequired, pattern: {value: /^\S+@\S+\.\S+$/, message: t.errors.emailInvalid,} })} />
+      <Input label={t.email} type="email" placeholder={t.emailPh} iconStart={<Mail size={17} />} error={errors.email?.message ? t.errors[errors.email.message] || errors.email.message : undefined} {...register('email', { required: 'emailRequired', pattern: {value: /^\S+@\S+\.\S+$/, message: 'emailInvalid',} })} />
       <div className="mt-1.5">
         <Button type="submit" size="full" disabled={loading}>
           {loading ? (
