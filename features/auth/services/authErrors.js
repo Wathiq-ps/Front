@@ -1,6 +1,6 @@
 export const AUTH_ERROR_KEYS = {
   OTP_REQUEST_VALIDATION: 'otpRequestValidation',
-  otp_invalid: 'otpInvalid',
+  otp_invalid: 'otpCodeIncorrect',
   otp_not_found: 'otpNotFound',
   OTP_REQUEST_FAILED: 'otpRequestFailed',
   OTP_VERIFY_FAILED: 'otpVerifyFailed',

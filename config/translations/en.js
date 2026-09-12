@@ -26,6 +26,7 @@
     errors: {
       emailRequired: 'Email is required',
       emailInvalid: 'Invalid email address',
+      otpCodeIncorrect: 'The code you entered is incorrect.',
       otpRequestValidation: 'Email is required.',
       otpInvalid: 'Verification code must be 6 digits',
       otpNotFound: 'No active verification code was found. Please request a new one.',

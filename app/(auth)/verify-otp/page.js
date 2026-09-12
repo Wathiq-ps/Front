@@ -25,12 +25,19 @@ function VerifyOtpContent() {
       await verifyOtp(email, code)
       router.replace(new URLSearchParams(window.location.search).get('next') || '/dashboard')
     } catch (e) {
+        console.log('OTP ERROR:', e)
       setError(getAuthErrorKey(e))
     } finally {
       setLoading(false)
     }
   }
-  const resend = async () => { if (seconds || !email) return; setResending(true); setError(''); try { await requestOtp(email); setSeconds(60) } catch (e) { setError(getAuthErrorKey(e)) } finally { setResending(false) } }
+  const resend = async () => { if (seconds || !email) return; setResending(true); setError(''); 
+    try {
+      await requestOtp(email)
+      setCode('')
+      inputRef.current?.focus()
+      setSeconds(60)
+    } catch (e) { setError(getAuthErrorKey(e)) } finally { setResending(false) } }
   return <AuthLayout>
     <div className="mb-9 text-start">
       <h2 className="mb-2.5 font-sans text-[30px] font-bold leading-[1.2] text-ink">
@@ -54,7 +61,7 @@ function VerifyOtpContent() {
         <label htmlFor="otp" className="font-sans text-[13.5px] font-semibold text-ink">
           {t.otpLabel}
         </label>
-        <input id="otp" ref={inputRef} inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={code} onChange={e => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))} placeholder="••••••" className={`box-border w-full rounded-xl border-[1.5px] px-4 py-3.5 text-center font-sans text-[22px] tracking-[0.35em] text-ink outline-none transition-[border-color,background-color,box-shadow] duration-150 ${
+        <input id="otp" ref={inputRef} inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={code} onChange={e => {setCode(e.target.value.replace(/\D/g, '').slice(0, 6));setError('')}} placeholder="••••••" className={`box-border w-full rounded-xl border-[1.5px] px-4 py-3.5 text-center font-sans text-[22px] tracking-[0.35em] text-ink outline-none transition-[border-color,background-color,box-shadow] duration-150 ${
            error
            ? 'border-danger bg-surface-error focus:border-danger focus:ring-[3px] focus:ring-danger/12'
            : 'border-border-strong bg-surface-input focus:border-brand-navy focus:bg-white focus:ring-[3px] focus:ring-brand-navy/10'}`} />

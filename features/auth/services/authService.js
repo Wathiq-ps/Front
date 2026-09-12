@@ -1,5 +1,5 @@
-export async function requestOtp(email) {
-  const response = await fetch('/api/auth/otp/request', { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include', body: JSON.stringify({ email }) })
+export async function requestOtp(email, status = 'login') {
+  const response = await fetch('/api/auth/otp/request', { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include', body: JSON.stringify({ email, status  }) })
   const data = await response.json().catch(() => ({}))
   if (!response.ok) {
     const error = new Error(data.message || 'Unable to send verification code.')
