@@ -22,9 +22,14 @@ function VerifyOtpContent() {
     setLoading(true)
     setError('')
     try {
-      await verifyOtp(email, code)
-      router.replace(new URLSearchParams(window.location.search).get('next') || '/dashboard')
-    } catch (e) {
+      const data = await verifyOtp(email, code)
+      if (data.user?.role === 'admin') {
+        router.replace('/dashboard')
+        return
+      }
+      // User Dashboard - مش مجهزها حاليا
+    }
+     catch (e) {
         console.log('OTP ERROR:', e)
       setError(getAuthErrorKey(e))
     } finally {
