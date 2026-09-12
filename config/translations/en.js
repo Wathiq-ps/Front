@@ -26,7 +26,16 @@
     errors: {
       emailRequired: 'Email is required',
       emailInvalid: 'Invalid email address',
+      otpRequestValidation: 'Email is required.',
       otpInvalid: 'Verification code must be 6 digits',
+      otpNotFound: 'No active verification code was found. Please request a new one.',
+      otpRequestFailed: 'Unable to send the verification code.',
+      otpVerifyFailed: 'The verification code is invalid or has expired.',
+      otpVerifyValidation: 'Email and verification code are required.',
+      authApiNotConfigured: 'Authentication service is not configured.',
+      authTokensMissing: 'Unable to complete authentication.',
+      authServiceUnavailable: 'Unable to connect to the authentication service.',
+      generic: 'Something went wrong.',
     },
 
     // Login

@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button'
 import { Spinner } from '@/components/ui/Spinner'
 import { useLang } from '@/context/LanguageContext'
 import { requestOtp, verifyOtp } from '@/features/auth/services/authService'
+import { getAuthErrorKey } from '@/features/auth/services/authErrors'
 
 function VerifyOtpContent() {
   const { t } = useLang(); const router = useRouter(); const params = useSearchParams()
@@ -15,7 +16,7 @@ function VerifyOtpContent() {
   const submit = async e => {
     e.preventDefault()
     if (code.length !== 6) {
-      setError(t.errors.otpInvalid)
+      setError('otpInvalid')
       return
     }
     setLoading(true)
@@ -24,12 +25,12 @@ function VerifyOtpContent() {
       await verifyOtp(email, code)
       router.replace(new URLSearchParams(window.location.search).get('next') || '/dashboard')
     } catch (e) {
-      setError(e.message)
+      setError(getAuthErrorKey(e))
     } finally {
       setLoading(false)
     }
   }
-  const resend = async () => { if (seconds || !email) return; setResending(true); setError(''); try { await requestOtp(email); setSeconds(60) } catch (e) { setError(e.message) } finally { setResending(false) } }
+  const resend = async () => { if (seconds || !email) return; setResending(true); setError(''); try { await requestOtp(email); setSeconds(60) } catch (e) { setError(getAuthErrorKey(e)) } finally { setResending(false) } }
   return <AuthLayout>
     <div className="mb-9 text-start">
       <h2 className="mb-2.5 font-sans text-[30px] font-bold leading-[1.2] text-ink">
@@ -45,7 +46,7 @@ function VerifyOtpContent() {
      role="alert"
      className="mb-[18px] rounded-xl bg-danger-bg px-3.5 py-[11px] text-start font-sans text-[13px] text-danger"
    >
-     {error}
+     {t.errors[error] || t.errors.generic}
    </div>
  )}
     <form onSubmit={submit} className="flex flex-col gap-[22px]">
