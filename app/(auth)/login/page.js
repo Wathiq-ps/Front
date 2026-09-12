@@ -20,14 +20,34 @@ export default function LoginPage() {
     catch (e) { setApiError(e.message) } finally { setLoading(false) }
   }
   return <AuthLayout>
-    <div style={{ marginBottom: 36, textAlign: isRtl ? 'right' : 'left' }}>
+    <div className={`mb-9 ${isRtl ? 'text-right' : 'text-left'}`}>
       <h2 style={{ fontSize: 30, fontWeight: 700, color: 'var(--color-ink)', lineHeight: 1.2, marginBottom: 10, fontFamily: 'var(--font-family-base)' }}>{t.loginTitle}</h2>
       <p style={{ fontSize: 15, color: 'var(--color-ink-subtle)', fontFamily: 'var(--font-family-base)' }}>{t.loginSub}</p>
     </div>
-    {apiError && <div role="alert" style={{ marginBottom: 18, padding: '11px 14px', borderRadius: 12, background: 'var(--color-danger-bg)', color: 'var(--color-danger)', fontSize: 13, fontFamily: 'var(--font-family-base)', textAlign: isRtl ? 'right' : 'left' }}>{apiError}</div>}
-    <form onSubmit={handleSubmit(onSubmit)} noValidate style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
+    {apiError && (
+      <div
+      role="alert"
+      className={`mb-[18px] rounded-xl bg-danger-bg px-3.5 py-[11px] font-sans text-[13px] text-danger ${
+        isRtl ? 'text-right' : 'text-left'
+      }`}
+      >
+        {apiError}
+        </div>
+      )}
+    <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-[22px]">
       <Input label={t.email} type="email" placeholder={t.emailPh} iconStart={<Mail size={17} />} error={errors.email?.message} {...register('email', { required: isRtl ? 'البريد مطلوب' : 'Email is required', pattern: { value: /^\S+@\S+\.\S+$/, message: isRtl ? 'بريد غير صحيح' : 'Invalid email' } })} />
-      <div style={{ marginTop: 6 }}><Button type="submit" size="full" disabled={loading}>{loading ? <><Spinner size={16} /> {t.sendingOtp}</> : t.continueBtn}</Button></div>
-    </form>
-  </AuthLayout>
-}
+      <div className="mt-1.5">
+        <Button type="submit" size="full" disabled={loading}>
+          {loading ? (
+            <>
+            <Spinner size={16} />
+            {t.sendingOtp}
+            </>
+            ) : (
+              t.continueBtn
+              )}
+              </Button>
+              </div>
+              </form>
+              </AuthLayout>
+              }
