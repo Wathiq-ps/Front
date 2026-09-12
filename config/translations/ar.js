@@ -91,7 +91,6 @@
           user:          'المستخدم',
           documentType:  'نوع الوثيقة',
           submittedAt:   'تاريخ التقديم',
-          priority:      'الأولوية',
           status:        'الحالة',
         },
         property: {
@@ -125,12 +124,6 @@
       specialties: {
         realEstate:     'العقارات',
         contractNotary: 'توثيق العقود',
-      },
-
-      priorities: {
-        high:           'عالية',
-        medium:         'متوسطة',
-        low:            'منخفضة',
       },
 
       statuses: {

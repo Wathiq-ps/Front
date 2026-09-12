@@ -91,7 +91,6 @@
           user:          'User',
           documentType:  'Document type',
           submittedAt:   'Submitted date',
-          priority:      'Priority',
           status:        'Status',
         },
         property: {
@@ -125,12 +124,6 @@
       specialties: {
         realEstate:     'Real estate',
         contractNotary: 'Contract notarization',
-      },
-
-      priorities: {
-        high:           'High',
-        medium:         'Medium',
-        low:            'Low',
       },
 
       statuses: {
