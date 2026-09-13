@@ -20,19 +20,43 @@ import { VerificationTabs } from './VerificationTabs'
 
 const ITEMS_PER_PAGE = 5
 
+const SEARCH_FIELDS = {
+  identity: ['id', 'name'],
+  property: ['id', 'name', 'city'],
+  lawyers: ['id', 'name', 'licenseNumber'],
+}
+
 export function VerificationList({ type }) {
   const { locale, t } = useLang()
   const [currentPage, setCurrentPage] = useState(1)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [statusFilter, setStatusFilter] = useState('all')
   const config = getVerificationConfig(type)
   const requests = [...(verificationRequests[config.key] ?? [])].sort(
     (a, b) => new Date(a.submittedAt) - new Date(b.submittedAt),
   )
+  const filteredRequests = requests.filter((request) => {
+  const query = searchQuery.trim().toLowerCase()
+  const searchFields = SEARCH_FIELDS[config.key] ?? []
+
+  const matchesSearch =
+    !query ||
+    searchFields.some((field) =>
+      String(request[field] ?? '').toLowerCase().includes(query),
+    )
+
+  const matchesStatus =
+    statusFilter === 'all' ||
+    request.status === statusFilter
+
+  return matchesSearch && matchesStatus
+})
   const activeColumns = getVerificationColumns(config.key)
   const totalPages = Math.max(
     1,
-    Math.ceil(requests.length / ITEMS_PER_PAGE),
+    Math.ceil(filteredRequests.length / ITEMS_PER_PAGE),
   )
-  const paginatedRequests = requests.slice(
+  const paginatedRequests = filteredRequests.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE,
   )
@@ -40,6 +64,8 @@ export function VerificationList({ type }) {
 
   useEffect(() => {
     setCurrentPage(1)
+    setSearchQuery('')
+    setStatusFilter('all')
   }, [type])
 
   useEffect(() => {
@@ -117,24 +143,57 @@ export function VerificationList({ type }) {
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
             <label className="relative">
               <Search
                 size={15}
-                className="absolute inset-inline-end-3 top-1/2 -translate-y-1/2 text-ink-faint"
+                className="pointer-events-none absolute inset-inline-end-4 top-1/2 -translate-y-1/2 text-ink-faint"
                 aria-hidden="true"
               />
               <input
-                className="w-52 rounded-xl border border-border bg-surface py-2.5 pe-9 ps-3 text-[12px] outline-none focus:border-brand-navy"
-                placeholder={t.verificationCenter.searchPlaceholder}
-                aria-label={t.verificationCenter.searchPlaceholder}
+                className="w-full rounded-xl border border-border bg-surface py-2.5 pe-14 ps-6 text-[12px] outline-none focus:border-brand-navy sm:w-72 lg:w-80"
+                placeholder={t.verificationCenter.searchPlaceholders[config.key]}
+                aria-label={t.verificationCenter.searchPlaceholders[config.key]}
+                value={searchQuery}
+                onChange={(event) => {
+                  setSearchQuery(event.target.value) 
+                  setCurrentPage(1) }}
               />
             </label>
 
-            <Button variant="outline" size="sm">
-              <SlidersHorizontal size={15} />
-              {t.verificationCenter.filter}
-            </Button>
+            <label className="relative">
+              <SlidersHorizontal
+                size={15}
+                className="pointer-events-none absolute inset-inline-end-4 top-1/2 -translate-y-1/2 text-ink-faint"
+                aria-hidden="true"
+              />
+
+              <select
+                value={statusFilter}
+                onChange={(event) => {
+                  setStatusFilter(event.target.value)
+                  setCurrentPage(1)
+                }}
+                aria-label={t.verificationCenter.filter}
+                className="w-full appearance-none rounded-xl border border-border bg-surface py-2.5 pe-14 ps-6 text-[12px] text-ink outline-none focus:border-brand-navy sm:w-40"
+              >
+                <option value="all">
+                  {t.verificationCenter.filterAll}
+                </option>
+
+                <option value="pending">
+                  {t.verificationCenter.statuses.pending}
+                </option>
+
+                <option value="approved">
+                  {t.verificationCenter.statuses.approved}
+                </option>
+
+                <option value="rejected">
+                  {t.verificationCenter.statuses.rejected}
+                </option>
+              </select>
+            </label>
           </div>
         </div>
 
@@ -155,35 +214,47 @@ export function VerificationList({ type }) {
             </thead>
 
             <tbody>
-              {paginatedRequests.map((request) => (
-                <tr
-                  key={request.id}
-                  className="border-t border-border transition-colors hover:bg-surface/60"
-                >
-                  {activeColumns.map((column) => (
+              {paginatedRequests.length > 0 ? (
+                  paginatedRequests.map((request) => (
+                    <tr
+                      key={request.id}
+                      className="border-t border-border transition-colors hover:bg-surface/60"
+                    >
+                      {activeColumns.map((column) => (
+                        <td
+                          key={column}
+                          className="px-5 py-4 text-[12px] text-ink-muted"
+                        >
+                          {renderVerificationCell(
+                            config.key,
+                            column,
+                            request,
+                            context,
+                          )}
+                        </td>
+                      ))}
+
+                      <td className="px-5 py-4 text-end">
+                        <Link
+                          href={`${config.listHref}/${request.id}`}
+                          className="inline-flex items-center gap-1 text-[12px] font-semibold text-brand-navy hover:underline"
+                        >
+                          {t.verificationCenter.viewDetails}
+                          <ArrowUpRight size={14} />
+                        </Link>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
                     <td
-                      key={column}
-                      className="px-5 py-4 text-[12px] text-ink-muted"
+                      colSpan={activeColumns.length + 1}
+                      className="px-5 py-12 text-center text-[12px] text-ink-faint"
                     >
-                      {renderVerificationCell(
-                        config.key,
-                        column,
-                        request,
-                        context,
-                      )}
+                      {t.verificationCenter.noResults}
                     </td>
-                  ))}
-                  <td className="px-5 py-4 text-end">
-                    <Link
-                      href={`${config.listHref}/${request.id}`}
-                      className="inline-flex items-center gap-1 text-[12px] font-semibold text-brand-navy hover:underline"
-                    >
-                      {t.verificationCenter.viewDetails}
-                      <ArrowUpRight size={14} />
-                    </Link>
-                  </td>
-                </tr>
-              ))}
+                  </tr>
+                )}
             </tbody>
           </table>
         </div>
@@ -193,7 +264,7 @@ export function VerificationList({ type }) {
             {t.verificationCenter.page} {currentPage} {t.verificationCenter.of} {totalPages}
           </span>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <Button
               variant="outline"
               size="xs"

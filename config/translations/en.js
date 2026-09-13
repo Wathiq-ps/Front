@@ -81,7 +81,13 @@
       breadcrumb:        'Breadcrumb',
       types:             'Verification types',
       description:       'Manage and review pending verification requests',
-      searchPlaceholder: 'Search by request ID or name',
+
+      searchPlaceholders: {
+        identity: 'Search by user ID or name',
+        property: 'Search by request ID, owner name or city',
+        lawyers: 'Search by request ID, lawyer name or license number',
+      },
+      
       filter:            'Filter',
       viewDetails:       'View details',
       pendingSummary:    'Total pending requests',
@@ -91,6 +97,8 @@
       previousPage:      'Previous',
       nextPage:          'Next',
       pendingRequests:   'requests pending review',
+      filterAll: 'All',
+      noResults: 'No matching results found',
 
       columns: {
         identity: {
