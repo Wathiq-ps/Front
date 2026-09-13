@@ -86,6 +86,10 @@
       viewDetails:       'View details',
       pendingSummary:    'Total pending requests',
       verifiedSummary:   'Total verified requests',
+      page:              'Page',
+      of:                'of',
+      previousPage:      'Previous',
+      nextPage:          'Next',
       pendingRequests:   'requests pending review',
 
       columns: {

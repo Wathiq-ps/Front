@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { ArrowUpRight, Search, SlidersHorizontal } from 'lucide-react'
 
@@ -17,14 +18,33 @@ import { renderVerificationCell } from '@/features/verification/utils/verificati
 import { VerificationBreadcrumbs } from './VerificationBreadcrumbs'
 import { VerificationTabs } from './VerificationTabs'
 
+const ITEMS_PER_PAGE = 5
+
 export function VerificationList({ type }) {
   const { locale, t } = useLang()
+  const [currentPage, setCurrentPage] = useState(1)
   const config = getVerificationConfig(type)
   const requests = [...(verificationRequests[config.key] ?? [])].sort(
     (a, b) => new Date(a.submittedAt) - new Date(b.submittedAt),
   )
   const activeColumns = getVerificationColumns(config.key)
+  const totalPages = Math.max(
+    1,
+    Math.ceil(requests.length / ITEMS_PER_PAGE),
+  )
+  const paginatedRequests = requests.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE,
+  )
   const context = { locale, t, requests }
+
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [type])
+
+  useEffect(() => {
+    setCurrentPage((page) => Math.min(page, totalPages))
+  }, [totalPages])
 
   const pendingCount = getTotalVerificationCount()
   const verifiedCount = Object.values(verificationRequests)
@@ -115,7 +135,7 @@ export function VerificationList({ type }) {
             </thead>
 
             <tbody>
-              {requests.map((request) => (
+              {paginatedRequests.map((request) => (
                 <tr
                   key={request.id}
                   className="border-t border-border transition-colors hover:bg-surface/60"
@@ -146,6 +166,32 @@ export function VerificationList({ type }) {
               ))}
             </tbody>
           </table>
+        </div>
+
+        <div className="flex items-center justify-between gap-3 border-t border-border px-6 py-4">
+          <span className="text-[12px] text-ink-faint">
+            {t.verificationCenter.page} {currentPage} {t.verificationCenter.of} {totalPages}
+          </span>
+
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="xs"
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
+            >
+              {t.verificationCenter.previousPage}
+            </Button>
+
+            <Button
+              variant="outline"
+              size="xs"
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}
+            >
+              {t.verificationCenter.nextPage}
+            </Button>
+          </div>
         </div>
       </Card>
     </div>

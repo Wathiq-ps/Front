@@ -86,6 +86,10 @@
       viewDetails:       'عرض التفاصيل',
       pendingSummary:    'إجمالي الطلبات المعلقة',
       verifiedSummary:   'إجمالي الطلبات الموثقة',
+      page:              'صفحة',
+      of:                'من',
+      previousPage:      'السابق',
+      nextPage:          'التالي',
       pendingRequests:   'طلبًا بانتظار المراجعة',
 
       columns: {
