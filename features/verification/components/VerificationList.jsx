@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { ArrowUpRight, Search, SlidersHorizontal } from 'lucide-react'
+import { ArrowUpRight, Search, SlidersHorizontal, BadgeCheck, Clock3 } from 'lucide-react'
 
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
@@ -66,21 +66,41 @@ export function VerificationList({ type }) {
 
       <div className="grid gap-4 sm:grid-cols-2">
         <Card className="p-5">
-          <p className="text-[12px] text-ink-faint">
-            {t.verificationCenter.pendingSummary}
-          </p>
-          <p className="mt-2 text-[26px] font-bold text-ink">
-            {pendingCount}
-          </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-[12px] text-ink-faint">
+                {t.verificationCenter.pendingSummary}
+              </p>
+
+              <p className="mt-2 text-[26px] font-bold text-ink">
+                {pendingCount}
+              </p>
+            </div>
+
+            <Clock3
+              size={22}
+              className="text-brand-gold"
+            />
+          </div>
         </Card>
 
         <Card className="p-5">
-          <p className="text-[12px] text-ink-faint">
-            {t.verificationCenter.verifiedSummary}
-          </p>
-          <p className="mt-2 text-[26px] font-bold text-ink">
-            {verifiedCount}
-          </p>
+          <div className="flex items-center justify-between">
+              <div>
+                <p className="text-[12px] text-ink-faint">
+                  {t.verificationCenter.verifiedSummary}
+                </p>
+
+                <p className="mt-2 text-[26px] font-bold text-ink">
+                  {verifiedCount}
+                </p>
+              </div>
+
+              <BadgeCheck
+                size={22}
+                className="text-emerald-600"
+              />
+            </div>
         </Card>
       </div>
 
@@ -130,7 +150,7 @@ export function VerificationList({ type }) {
                     {t.verificationCenter.columns[config.key][column]}
                   </th>
                 ))}
-                <th aria-label={t.verificationCenter.viewDetails} />
+                <th className="w-24" aria-label={t.verificationCenter.viewDetails}/>
               </tr>
             </thead>
 
