@@ -84,6 +84,8 @@
       searchPlaceholder: 'Search by request ID or name',
       filter:            'Filter',
       viewDetails:       'View details',
+      pendingSummary:    'Total pending requests',
+      verifiedSummary:   'Total verified requests',
       pendingRequests:   'requests pending review',
 
       columns: {

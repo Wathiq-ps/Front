@@ -84,6 +84,8 @@
       searchPlaceholder: 'بحث برقم الطلب أو الاسم',
       filter:            'تصفية',
       viewDetails:       'عرض التفاصيل',
+      pendingSummary:    'إجمالي الطلبات المعلقة',
+      verifiedSummary:   'إجمالي الطلبات الموثقة',
       pendingRequests:   'طلبًا بانتظار المراجعة',
 
       columns: {

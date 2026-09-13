@@ -9,6 +9,7 @@ import { useLang } from '@/context/LanguageContext'
 import {
   getVerificationColumns,
   getVerificationConfig,
+  getTotalVerificationCount,
 } from '@/features/verification/config/verification.config'
 import { verificationRequests } from '@/features/verification/data/verificationMock'
 import { renderVerificationCell } from '@/features/verification/utils/verification.formatters'
@@ -25,6 +26,11 @@ export function VerificationList({ type }) {
   const activeColumns = getVerificationColumns(config.key)
   const context = { locale, t, requests }
 
+  const pendingCount = getTotalVerificationCount()
+  const verifiedCount = Object.values(verificationRequests)
+    .flat()
+    .filter((request) => request.status === 'approved').length
+
   return (
     <div className="flex flex-col gap-5">
       <VerificationBreadcrumbs type={type} />
@@ -36,6 +42,26 @@ export function VerificationList({ type }) {
         <p className="mt-1.5 text-[13.5px] text-ink-faint">
           {t.verificationCenter.description}
         </p>
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Card className="p-5">
+          <p className="text-[12px] text-ink-faint">
+            {t.verificationCenter.pendingSummary}
+          </p>
+          <p className="mt-2 text-[26px] font-bold text-ink">
+            {pendingCount}
+          </p>
+        </Card>
+
+        <Card className="p-5">
+          <p className="text-[12px] text-ink-faint">
+            {t.verificationCenter.verifiedSummary}
+          </p>
+          <p className="mt-2 text-[26px] font-bold text-ink">
+            {verifiedCount}
+          </p>
+        </Card>
       </div>
 
       <VerificationTabs />
@@ -99,7 +125,12 @@ export function VerificationList({ type }) {
                       key={column}
                       className="px-5 py-4 text-[12px] text-ink-muted"
                     >
-                      {renderVerificationCell(config.key, column, request, context)}
+                      {renderVerificationCell(
+                        config.key,
+                        column,
+                        request,
+                        context,
+                      )}
                     </td>
                   ))}
                   <td className="px-5 py-4 text-end">
