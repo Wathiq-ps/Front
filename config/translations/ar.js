@@ -81,7 +81,10 @@
       breadcrumb:        'مسار الصفحة',
       types:             'أنواع التحقق',
       description:       'إدارة ومراجعة طلبات التحقق المعلقة',
-
+      detail: {
+        breadcrumb: 'مراجعة طلب التحقق من الهوية',
+        pendingImplementation: 'تفاصيل التحقق من الهوية',
+      },
       searchPlaceholders: {
         identity: 'بحث برقم المستخدم أو الاسم',
         property: 'بحث برقم الطلب أو اسم المالك أو المدينة',

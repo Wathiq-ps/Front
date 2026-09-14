@@ -81,7 +81,10 @@
       breadcrumb:        'Breadcrumb',
       types:             'Verification types',
       description:       'Manage and review pending verification requests',
-
+      detail: {
+        breadcrumb: 'Identity Verification Request',
+        pendingImplementation: 'Identity verification details',
+      },
       searchPlaceholders: {
         identity: 'Search by user ID or name',
         property: 'Search by request ID, owner name or city',
