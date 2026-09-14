@@ -1,5 +1,13 @@
 import { formatDateTime } from '@/config/locales'
 
+export function getLocalizedName(request, locale) {
+  if (typeof request.name === 'object') {
+    return request.name[locale] ?? request.name.ar ?? ''
+  }
+
+  return request.name ?? ''
+}
+
 function getVerificationLabel(t, group, value) {
   return t.verificationCenter[group]?.[value] ?? value
 }
@@ -38,7 +46,8 @@ function formatSubmittedAt(request, { locale }) {
 
 export const CELL_RENDERERS = {
   identity: {
-    user: (request) => request.name,
+    user: (request, { locale }) =>
+      getLocalizedName(request, locale),
 
     documentType: getDocumentTypeLabel,
 
@@ -48,14 +57,14 @@ export const CELL_RENDERERS = {
   },
 
   property: {
-    requestOwner: (request) => (
+    requestOwner: (request, { locale }) => (
       <div>
         <div className="font-semibold text-brand-navy">
           {request.id}
         </div>
 
         <div className="mt-0.5 text-[11px] text-ink-faint">
-          {request.name}
+          {getLocalizedName(request, locale)}
         </div>
       </div>
     ),
@@ -72,7 +81,8 @@ export const CELL_RENDERERS = {
   },
 
   lawyers: {
-    lawyer: (request) => request.name,
+    lawyer: (request, { locale }) =>
+      getLocalizedName(request, locale),
 
     licenseNumber: (request) => request.licenseNumber,
 

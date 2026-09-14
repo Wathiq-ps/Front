@@ -149,6 +149,19 @@
         approved:       'موثّق',
         rejected:       'مرفوض',
       },
+      
+      detail: {
+        identityDetail: 'مراجعة طلب التحقق من الهوية',
+        extractedData: 'البيانات المستخرجة',
+        fullName: 'الاسم الكامل',
+        identityNumber: 'رقم الهوية',
+        birthDate: 'تاريخ الميلاد',
+        nationality: 'الجنسية',
+        nationalities: {
+          saudi: 'سعودي',
+          palestinian: 'فلسطيني',
+        },
+      },
     },
 
     // Dashboard stats

@@ -2,27 +2,54 @@ export const verificationRequests = {
   identity: [
     {
       id: 'USR-9283',
-      name: 'أحمد محمد',
+      name: {
+        ar: 'أحمد محمد',
+        en: 'Ahmed Mohammed',
+      },
       documentType: 'nationalId',
       submittedAt: '2026-08-12T08:18:00+03:00',
       status: 'pending',
       reference: '1092837465',
+      details: {
+        fullName: 'أحمد بن محمد',
+        identityNumber: '1092837465',
+        birthDate: '1985-05-14',
+        nationality: 'palestinian',
+      },      
     },
     {
       id: 'USR-9271',
-      name: 'سارة خالد',
+      name: {
+        ar: 'سارة خالد',
+        en: 'Sarah Khalid',
+      },
       documentType: 'passport',
       submittedAt: '2026-08-12T07:54:00+03:00',
       status: 'pending',
       reference: '1091827364',
+      details: {
+        fullName: 'سارة خالد',
+        identityNumber: '1091827364',
+        birthDate: '1990-08-21',
+        nationality: 'saudi',
+      },
     },
     {
       id: 'USR-9258',
-      name: 'محمد علي',
+      name: {
+        ar: 'محمد علي',
+        en: 'Mohammed Ali',
+      },
       documentType: 'residenceCard',
       submittedAt: '2026-08-12T07:36:00+03:00',
       status: 'pending',
       reference: '1087264519',
+      details: {
+        fullName: 'محمد علي',
+        identityNumber: '1087264519',
+        birthDate: '1988-03-11',
+        nationality: 'saudi',
+      },
     },
   ],
 

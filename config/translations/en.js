@@ -149,6 +149,19 @@
         approved:       'Verified',
         rejected:       'Rejected',
       },
+
+      detail: {
+        identityDetail: 'Identity verification request',
+        extractedData: 'Extracted data',
+        fullName: 'Full name',
+        identityNumber: 'Identity number',
+        birthDate: 'Date of birth',
+        nationality: 'Nationality',
+        nationalities: {
+          saudi: 'Saudi',
+          palestinian: 'Palestinian',
+        },
+      },
     },
 
     // Dashboard stats
