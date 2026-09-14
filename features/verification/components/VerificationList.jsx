@@ -151,7 +151,7 @@ export function VerificationList({ type }) {
                 aria-hidden="true"
               />
               <input
-                className="w-full rounded-xl border border-border bg-surface py-2.5 pe-14 ps-6 text-[12px] outline-none focus:border-brand-navy sm:w-72 lg:w-80"
+                className="w-full rounded-xl border border-border bg-surface py-2.5 pe-14 ps-6 text-[12px] outline-none focus:ring-2 focus:ring-brand-navy/20 sm:w-72 lg:w-80"
                 placeholder={t.verificationCenter.searchPlaceholders[config.key]}
                 aria-label={t.verificationCenter.searchPlaceholders[config.key]}
                 value={searchQuery}
@@ -175,7 +175,7 @@ export function VerificationList({ type }) {
                   setCurrentPage(1)
                 }}
                 aria-label={t.verificationCenter.filter}
-                className="w-full appearance-none rounded-xl border border-border bg-surface py-2.5 pe-14 ps-6 text-[12px] text-ink outline-none focus:border-brand-navy sm:w-40"
+                className="w-full appearance-none rounded-xl border border-border bg-surface py-2.5 pe-14 ps-6 text-[12px] text-ink outline-none focus:ring-2 focus:ring-brand-navy/20 sm:w-40"
               >
                 <option value="all">
                   {t.verificationCenter.filterAll}
