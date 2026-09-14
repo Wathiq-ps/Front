@@ -131,7 +131,7 @@ export function Sidebar() {
             <WathiqLogo variant="full" size="md" />
           </span>
           <span className="logo-icon" style={{ display: 'none' }}>
-            <WathiqLogo variant="icon" size="md" />
+            <WathiqLogo variant="icon" size="lg" />
           </span>
         </div>
 
