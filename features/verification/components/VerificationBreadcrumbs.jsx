@@ -6,7 +6,7 @@ import { ChevronLeft } from 'lucide-react'
 import { useLang } from '@/context/LanguageContext'
 import { getVerificationConfig } from '@/features/verification/config/verification.config'
 
-export function VerificationBreadcrumbs({ type }) {
+export function VerificationBreadcrumbs({ type, currentLabel }) {
   const { t } = useLang()
   const config = type ? getVerificationConfig(type) : null
 
@@ -36,7 +36,7 @@ export function VerificationBreadcrumbs({ type }) {
           <ChevronLeft size={14} aria-hidden="true" />
 
           <span className="text-ink-muted">
-            {t[config.labelKey]}
+            {currentLabel ?? t[config.labelKey]}
           </span>
         </>
       )}

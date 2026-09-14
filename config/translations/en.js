@@ -81,6 +81,7 @@
       breadcrumb:        'Breadcrumb',
       types:             'Verification types',
       description:       'Manage and review pending verification requests',
+      identityDetail:    'Identity verification request',
       detail: {
         breadcrumb: 'Identity Verification Request',
         pendingImplementation: 'Identity verification details',
