@@ -1,19 +1,4 @@
-import { Badge } from '@/components/ui/Badge'
 import { formatDateTime } from '@/config/locales'
-
-function getPriority(requests, requestId) {
-  const orderedRequests = [...requests].sort(
-    (a, b) => new Date(a.submittedAt) - new Date(b.submittedAt),
-  )
-
-  const index = orderedRequests.findIndex(
-    (request) => request.id === requestId,
-  )
-
-  if (index === 0) return 'high'
-  if (index === 1) return 'medium'
-  return 'low'
-}
 
 function getVerificationLabel(t, group, value) {
   return t.verificationCenter[group]?.[value] ?? value
@@ -47,18 +32,8 @@ function getSpecialtyLabel(request, { t }) {
   )
 }
 
-function getPriorityLabel(priority, { t }) {
-  return getVerificationLabel(t, 'priorities', priority)
-}
-
 function formatSubmittedAt(request, { locale }) {
   return formatDateTime(request.submittedAt, locale)
-}
-
-function getPriorityVariant(priority) {
-  if (priority === 'high') return 'danger'
-  if (priority === 'medium') return 'warning'
-  return 'muted'
 }
 
 export const CELL_RENDERERS = {
@@ -68,16 +43,6 @@ export const CELL_RENDERERS = {
     documentType: getDocumentTypeLabel,
 
     submittedAt: formatSubmittedAt,
-
-    priority: (request, { requests, t }) => {
-      const priority = getPriority(requests, request.id)
-
-      return (
-        <Badge variant={getPriorityVariant(priority)}>
-          {getPriorityLabel(priority, { t })}
-        </Badge>
-      )
-    },
 
     status: getStatusLabel,
   },

@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils'
  * responsive: shows full on ≥769px, icon on <769px via CSS classes
  */
 export function WathiqLogo({ variant = 'full', size = 'md', responsive = false, className }) {
-  const iconDim = { xs: 22, sm: 26, md: 32, lg: 44 }[size] ?? 32
+  const iconDim = { xs: 22, sm: 26, md: 32, lg: 55 }[size] ?? 32
   const fullH   = { xs: 20, sm: 24, md: 28, lg: 38 }[size] ?? 28
   const fullW   = Math.round(fullH * 3.4)
 

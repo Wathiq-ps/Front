@@ -81,17 +81,30 @@
       breadcrumb:        'مسار الصفحة',
       types:             'أنواع التحقق',
       description:       'إدارة ومراجعة طلبات التحقق المعلقة',
-      searchPlaceholder: 'بحث برقم الطلب أو الاسم',
+
+      searchPlaceholders: {
+        identity: 'بحث برقم المستخدم أو الاسم',
+        property: 'بحث برقم الطلب أو اسم المالك أو المدينة',
+        lawyers: 'بحث برقم الطلب أو اسم المحامي أو رقم الترخيص',
+      },
+      
       filter:            'تصفية',
       viewDetails:       'عرض التفاصيل',
+      pendingSummary:    'إجمالي الطلبات المعلقة',
+      verifiedSummary:   'إجمالي الطلبات الموثقة',
+      page:              'صفحة',
+      of:                'من',
+      previousPage:      'السابق',
+      nextPage:          'التالي',
       pendingRequests:   'طلبًا بانتظار المراجعة',
+      filterAll: 'الكل',
+      noResults: 'لا توجد نتائج مطابقة',
 
       columns: {
         identity: {
           user:          'المستخدم',
           documentType:  'نوع الوثيقة',
           submittedAt:   'تاريخ التقديم',
-          priority:      'الأولوية',
           status:        'الحالة',
         },
         property: {
@@ -125,12 +138,6 @@
       specialties: {
         realEstate:     'العقارات',
         contractNotary: 'توثيق العقود',
-      },
-
-      priorities: {
-        high:           'عالية',
-        medium:         'متوسطة',
-        low:            'منخفضة',
       },
 
       statuses: {

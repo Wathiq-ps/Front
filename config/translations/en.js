@@ -81,17 +81,30 @@
       breadcrumb:        'Breadcrumb',
       types:             'Verification types',
       description:       'Manage and review pending verification requests',
-      searchPlaceholder: 'Search by request ID or name',
+
+      searchPlaceholders: {
+        identity: 'Search by user ID or name',
+        property: 'Search by request ID, owner name or city',
+        lawyers: 'Search by request ID, lawyer name or license number',
+      },
+      
       filter:            'Filter',
       viewDetails:       'View details',
+      pendingSummary:    'Total pending requests',
+      verifiedSummary:   'Total verified requests',
+      page:              'Page',
+      of:                'of',
+      previousPage:      'Previous',
+      nextPage:          'Next',
       pendingRequests:   'requests pending review',
+      filterAll: 'All',
+      noResults: 'No matching results found',
 
       columns: {
         identity: {
           user:          'User',
           documentType:  'Document type',
           submittedAt:   'Submitted date',
-          priority:      'Priority',
           status:        'Status',
         },
         property: {
@@ -125,12 +138,6 @@
       specialties: {
         realEstate:     'Real estate',
         contractNotary: 'Contract notarization',
-      },
-
-      priorities: {
-        high:           'High',
-        medium:         'Medium',
-        low:            'Low',
       },
 
       statuses: {

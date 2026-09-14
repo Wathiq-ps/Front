@@ -4,7 +4,7 @@ export const VERIFICATION_TYPES = {
     labelKey: 'identityCheck',
     listHref: '/dashboard/verification/identity',
     count: 21,
-    columns: ['user', 'documentType', 'submittedAt', 'priority', 'status'],
+    columns: ['user', 'documentType', 'submittedAt', 'status'],
   },
 
   property: {
