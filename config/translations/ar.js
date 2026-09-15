@@ -14,6 +14,7 @@
       userName:       'عبد الله أحمد',
       userRole:       'مسؤول أول',
       userInitial:    'س',
+      close: 'إغلاق',
     },
 
     // Auth shared

@@ -14,6 +14,7 @@
       userName:       'Abdullah Ahmed',
       userRole:       'Senior Admin',
       userInitial:    'S',
+      close: 'إغلاق',
     },
 
     // Auth shared
