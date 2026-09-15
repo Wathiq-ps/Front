@@ -14,7 +14,8 @@
       userName:       'Abdullah Ahmed',
       userRole:       'Senior Admin',
       userInitial:    'S',
-      close: 'إغلاق',
+      close: 'Close',
+      cancel: 'Cancel',
     },
 
     // Auth shared
@@ -94,6 +95,13 @@
       viewDetails:       'View details',
       approve: 'Verify request',
       reject: 'Reject request',
+      approveConfirmTitle: 'Confirm verification',
+      approveConfirmDescription: 'Are you sure you want to verify this request?',
+      rejectConfirmTitle: 'Reject verification request',
+      rejectConfirmDescription: 'Please provide a reason for rejecting this verification request.',
+      rejectionReason: 'Rejection reason',
+      rejectionReasonPlaceholder: 'Enter the reason for rejecting this request...',
+
       reviewDecision: 'Verification decision',
       reviewDecisionDescription: 'Review the data and documents before making a decision.',
       pendingSummary:    'Total pending requests',
