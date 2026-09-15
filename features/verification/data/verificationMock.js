@@ -39,7 +39,7 @@ export const verificationRequests = {
         documents: {
           identity: null,
           selfie: null,
-        },        
+        },          
       },
     },
     {
