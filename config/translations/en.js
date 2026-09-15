@@ -82,10 +82,7 @@
       types:             'Verification types',
       description:       'Manage and review pending verification requests',
       identityDetail:    'Identity verification request',
-      detail: {
-        breadcrumb: 'Identity Verification Request',
-        pendingImplementation: 'Identity verification details',
-      },
+
       searchPlaceholders: {
         identity: 'Search by user ID or name',
         property: 'Search by request ID, owner name or city',
@@ -157,6 +154,10 @@
         identityNumber: 'Identity number',
         birthDate: 'Date of birth',
         nationality: 'Nationality',
+        documents: 'Documents & Images',
+        identityDocument: 'Identity document',
+        selfie: 'Selfie',
+        noImage: 'No image available',
         nationalities: {
           saudi: 'Saudi',
           palestinian: 'Palestinian',

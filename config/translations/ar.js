@@ -82,10 +82,7 @@
       types:             'أنواع التحقق',
       description:       'إدارة ومراجعة طلبات التحقق المعلقة',
       identityDetail:    'مراجعة طلب التحقق من الهوية',
-      detail: {
-        breadcrumb: 'مراجعة طلب التحقق من الهوية',
-        pendingImplementation: 'تفاصيل التحقق من الهوية',
-      },
+
       searchPlaceholders: {
         identity: 'بحث برقم المستخدم أو الاسم',
         property: 'بحث برقم الطلب أو اسم المالك أو المدينة',
@@ -157,6 +154,10 @@
         identityNumber: 'رقم الهوية',
         birthDate: 'تاريخ الميلاد',
         nationality: 'الجنسية',
+        documents: 'المستندات والصور',
+        identityDocument: 'صورة مستند الهوية',
+        selfie: 'صورة السيلفي',
+        noImage: 'لا توجد صورة',
         nationalities: {
           saudi: 'سعودي',
           palestinian: 'فلسطيني',

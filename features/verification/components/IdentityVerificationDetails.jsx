@@ -9,6 +9,7 @@ import { formatDate } from '@/config/locales'
 import { verificationRequests } from '@/features/verification/data/verificationMock'
 import { VerificationBreadcrumbs } from './VerificationBreadcrumbs'
 import { getLocalizedName } from '@/features/verification/utils/verification.formatters'
+import Image from 'next/image'
 
 export function IdentityVerificationDetails({ id }) {
   const { locale, t } = useLang()
@@ -143,6 +144,60 @@ export function IdentityVerificationDetails({ id }) {
             </div>
         </div>
         </Card>
+        
+        <Card>
+          <div className="border-b border-border pb-4">
+            <h2 className="text-[20px] font-bold text-brand-navy">
+              {t.verificationCenter.detail.documents}
+            </h2>
+          </div>
+
+          <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2">
+            <div>
+              <h3 className="mb-3 text-sm font-semibold text-ink">
+                {t.verificationCenter.detail.identityDocument}
+              </h3>
+
+              <div className="flex min-h-[220px] items-center justify-center rounded-xl border border-dashed border-border bg-surface-1">
+                {details.documents?.identity ? (
+                  <Image
+                    src={details.documents.identity}
+                    alt={t.verificationCenter.detail.identityDocument}
+                    width={600}
+                    height={400}
+                    className="h-auto max-h-[400px] w-full rounded-xl object-contain"
+                  />
+                ) : (
+                  <span className="text-sm text-ink-faint">
+                    {t.verificationCenter.detail.noImage}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <div>
+              <h3 className="mb-3 text-sm font-semibold text-ink">
+                {t.verificationCenter.detail.selfie}
+              </h3>
+
+              <div className="flex min-h-[220px] items-center justify-center rounded-xl border border-dashed border-border bg-surface-1">
+                {details.documents?.selfie ? (
+                  <Image
+                    src={details.documents.selfie}
+                    alt={t.verificationCenter.detail.selfie}
+                    width={400}
+                    height={400}
+                    className="h-auto max-h-[400px] w-full rounded-xl object-contain"
+                  />
+                ) : (
+                  <span className="text-sm text-ink-faint">
+                    {t.verificationCenter.detail.noImage}
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+        </Card>        
     </div>
   )
 }
