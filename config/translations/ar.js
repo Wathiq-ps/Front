@@ -92,6 +92,11 @@
       
       filter:            'تصفية',
       viewDetails:       'عرض التفاصيل',
+      approve: 'توثيق الطلب',
+      reject: 'رفض الطلب',
+      reviewDecision: 'قرار التحقق',
+      reviewDecisionDescription: 'راجع البيانات والمستندات قبل اتخاذ القرار.',
+      pendingSummary: 'إجمالي الطلبات المعلقة',
       pendingSummary:    'إجمالي الطلبات المعلقة',
       verifiedSummary:   'إجمالي الطلبات الموثقة',
       page:              'صفحة',

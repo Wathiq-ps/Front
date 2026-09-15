@@ -92,6 +92,10 @@
       
       filter:            'Filter',
       viewDetails:       'View details',
+      approve: 'Verify request',
+      reject: 'Reject request',
+      reviewDecision: 'Verification decision',
+      reviewDecisionDescription: 'Review the data and documents before making a decision.',
       pendingSummary:    'Total pending requests',
       verifiedSummary:   'Total verified requests',
       page:              'Page',

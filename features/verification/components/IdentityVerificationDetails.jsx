@@ -1,6 +1,6 @@
 'use client'
 
-import { CheckCircle2, X } from 'lucide-react'
+import { CheckCircle2, X, Check, XCircle } from 'lucide-react'
 import { useState } from 'react'
 
 import { Card } from '@/components/ui/Card'
@@ -226,6 +226,37 @@ export function IdentityVerificationDetails({ id }) {
             </div>
           </div>
         </Card>
+        <Card>
+  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <h2 className="text-[18px] font-bold text-brand-navy">
+        {t.verificationCenter.reviewDecision}
+      </h2>
+
+      <p className="mt-1 text-sm text-ink-faint">
+        {t.verificationCenter.reviewDecisionDescription}
+      </p>
+    </div>
+
+    <div className="flex shrink-0 gap-3">
+      <button
+        type="button"
+        className="inline-flex items-center gap-2 rounded-lg bg-brand-navy px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:opacity-90"
+      >
+        <Check size={17} aria-hidden="true" />
+        {t.verificationCenter.approve}
+      </button>
+
+      <button
+        type="button"
+        className="inline-flex items-center gap-2 rounded-lg border border-red-200 px-5 py-2.5 text-sm font-semibold text-red-600 transition-colors hover:bg-red-50"
+      >
+        <XCircle size={17} aria-hidden="true" />
+        {t.verificationCenter.reject}
+      </button>
+    </div>
+  </div>
+</Card>
         {selectedImage && (
           <div
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-5"
