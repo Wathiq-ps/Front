@@ -17,7 +17,7 @@ export function VerificationBreadcrumbs({ type, currentLabel }) {
     >
       <Link
         href="/dashboard"
-        className="transition-colors hover:text-brand-navy"
+        className="cursor-pointer transition-colors hover:text-brand-navy"
       >
         {t.home}
       </Link>
@@ -26,7 +26,7 @@ export function VerificationBreadcrumbs({ type, currentLabel }) {
 
       <Link
         href="/dashboard/verification"
-        className="transition-colors hover:text-brand-navy"
+        className="cursor-pointer transition-colors hover:text-brand-navy"
       >
         {t.verificationCenter.title}
       </Link>
