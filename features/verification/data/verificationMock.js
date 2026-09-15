@@ -11,10 +11,14 @@ export const verificationRequests = {
       status: 'pending',
       reference: '1092837465',
       details: {
-        fullName: 'أحمد بن محمد',
+        fullName: 'أحمد محمد',
         identityNumber: '1092837465',
         birthDate: '1985-05-14',
         nationality: 'palestinian',
+        documents: {
+          identity: null,
+          selfie: null,
+        },        
       },      
     },
     {
@@ -32,6 +36,10 @@ export const verificationRequests = {
         identityNumber: '1091827364',
         birthDate: '1990-08-21',
         nationality: 'saudi',
+        documents: {
+          identity: null,
+          selfie: null,
+        },        
       },
     },
     {
@@ -49,6 +57,10 @@ export const verificationRequests = {
         identityNumber: '1087264519',
         birthDate: '1988-03-11',
         nationality: 'saudi',
+        documents: {
+        identity: null,
+        selfie: null,
+      },
       },
     },
   ],
