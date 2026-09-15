@@ -58,7 +58,7 @@ export const verificationRequests = {
         birthDate: '1988-03-11',
         nationality: 'saudi',
         documents: {
-        identity: null,
+        identity: 'null',
         selfie: null,
       },
       },

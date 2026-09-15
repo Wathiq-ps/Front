@@ -159,6 +159,7 @@
         identityDocument: 'Identity document',
         selfie: 'Selfie',
         noImage: 'No image available',
+        imageLoadError: 'Unable to load image',
         nationalities: {
           saudi: 'Saudi',
           palestinian: 'Palestinian',

@@ -15,6 +15,7 @@ import Image from 'next/image'
 export function IdentityVerificationDetails({ id }) {
   const { locale, t } = useLang()
   const [selectedImage, setSelectedImage] = useState(null)
+  const [imageErrors, setImageErrors] = useState({})  
 
   const request = verificationRequests.identity.find(
     (item) => item.id === id,
@@ -161,7 +162,7 @@ export function IdentityVerificationDetails({ id }) {
               </h3>
 
               <div className="flex min-h-[220px] items-center justify-center rounded-xl border border-dashed border-border bg-surface-1">
-                {details.documents?.identity ? (
+                {details.documents?.identity && !imageErrors.identity ? (
                   <button
                     type="button"
                     onClick={() =>
@@ -178,11 +179,13 @@ export function IdentityVerificationDetails({ id }) {
                       width={600}
                       height={400}
                       className="h-auto max-h-[400px] w-full rounded-xl object-contain"
+                      onError={() =>setImageErrors((prev) => ({...prev,identity: true,}))}
                     />
                   </button>
                 ) : (
                   <span className="text-sm text-ink-faint">
-                    {t.verificationCenter.detail.noImage}
+                    {imageErrors.identity? t.verificationCenter.detail.imageLoadError: t.verificationCenter.detail.noImage}
+
                   </span>
                 )}
               </div>
@@ -194,7 +197,7 @@ export function IdentityVerificationDetails({ id }) {
               </h3>
 
               <div className="flex min-h-[220px] items-center justify-center rounded-xl border border-dashed border-border bg-surface-1">
-                {details.documents?.selfie ? (
+                {details.documents?.selfie && !imageErrors.selfie ? (
                   <button
                     type="button"
                     onClick={() =>
@@ -211,11 +214,12 @@ export function IdentityVerificationDetails({ id }) {
                       width={400}
                       height={400}
                       className="h-auto max-h-[400px] w-full rounded-xl object-contain"
+                      onError={() =>setImageErrors((prev) => ({...prev,selfie: true,}))}
                     />
                   </button>
                 ) : (
                   <span className="text-sm text-ink-faint">
-                    {t.verificationCenter.detail.noImage}
+                    {imageErrors.selfie? t.verificationCenter.detail.imageLoadError: t.verificationCenter.detail.noImage}
                   </span>
                 )}
               </div>

@@ -159,6 +159,7 @@
         identityDocument: 'صورة مستند الهوية',
         selfie: 'صورة السيلفي',
         noImage: 'لا توجد صورة',
+        imageLoadError: 'تعذر تحميل الصورة',
         nationalities: {
           saudi: 'سعودي',
           palestinian: 'فلسطيني',
