@@ -1,5 +1,4 @@
 'use client'
-
 import { useLang } from '@/context/LanguageContext'
 import { verificationRequests } from '@/features/verification/data/verificationMock'
 
@@ -8,10 +7,9 @@ import { VerificationDetailHeader } from './VerificationDetailHeader'
 import { PropertyExtractedData } from './PropertyExtractedData'
 import { VerificationDocumentPreview } from './VerificationDocumentPreview'
 import { Card } from '@/components/ui/Card'
-
+import { VerificationDecisionCard } from './VerificationDecisionCard'
 export function PropertyVerificationDetails({ id }) {
-  const { locale, t } = useLang()
-
+  const { t } = useLang()
   const request = verificationRequests.property.find(
     (item) => item.id === id,
   )
@@ -58,6 +56,7 @@ export function PropertyVerificationDetails({ id }) {
             />
         </div>
     </Card>
+    <VerificationDecisionCard />    
     </div>
   )
 }
