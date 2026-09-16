@@ -14,6 +14,8 @@
       userName:       'عبد الله أحمد',
       userRole:       'مسؤول أول',
       userInitial:    'س',
+      close: 'إغلاق',
+      cancel: 'إلغاء',
     },
 
     // Auth shared
@@ -81,6 +83,7 @@
       breadcrumb:        'مسار الصفحة',
       types:             'أنواع التحقق',
       description:       'إدارة ومراجعة طلبات التحقق المعلقة',
+      identityDetail:    'مراجعة طلب التحقق من الهوية',
 
       searchPlaceholders: {
         identity: 'بحث برقم المستخدم أو الاسم',
@@ -90,6 +93,18 @@
       
       filter:            'تصفية',
       viewDetails:       'عرض التفاصيل',
+      approve: 'توثيق الطلب',
+      reject: 'رفض الطلب',
+      approveConfirmTitle: 'تأكيد توثيق الطلب',
+      approveConfirmDescription: 'هل أنت متأكد من توثيق طلب التحقق هذا؟',
+
+      rejectConfirmTitle: 'رفض طلب التحقق',
+      rejectConfirmDescription: 'يرجى إدخال سبب رفض طلب التحقق قبل المتابعة.',
+      rejectionReason: 'سبب الرفض',
+      rejectionReasonPlaceholder: 'اكتب سبب رفض الطلب...',      
+      reviewDecision: 'قرار التحقق',
+      reviewDecisionDescription: 'راجع البيانات والمستندات قبل اتخاذ القرار.',
+      pendingSummary: 'إجمالي الطلبات المعلقة',
       pendingSummary:    'إجمالي الطلبات المعلقة',
       verifiedSummary:   'إجمالي الطلبات الموثقة',
       page:              'صفحة',
@@ -144,6 +159,24 @@
         pending:        'قيد المراجعة',
         approved:       'موثّق',
         rejected:       'مرفوض',
+      },
+      
+      detail: {
+        identityDetail: 'مراجعة طلب التحقق من الهوية',
+        extractedData: 'البيانات المستخرجة',
+        fullName: 'الاسم الكامل',
+        identityNumber: 'رقم الهوية',
+        birthDate: 'تاريخ الميلاد',
+        nationality: 'الجنسية',
+        documents: 'المستندات والصور',
+        identityDocument: 'صورة مستند الهوية',
+        selfie: 'صورة السيلفي',
+        noImage: 'لا توجد صورة',
+        imageLoadError: 'تعذر تحميل الصورة',
+        nationalities: {
+          saudi: 'سعودي',
+          palestinian: 'فلسطيني',
+        },
       },
     },
 

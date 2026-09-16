@@ -14,6 +14,8 @@
       userName:       'Abdullah Ahmed',
       userRole:       'Senior Admin',
       userInitial:    'S',
+      close: 'Close',
+      cancel: 'Cancel',
     },
 
     // Auth shared
@@ -81,6 +83,7 @@
       breadcrumb:        'Breadcrumb',
       types:             'Verification types',
       description:       'Manage and review pending verification requests',
+      identityDetail:    'Identity verification request',
 
       searchPlaceholders: {
         identity: 'Search by user ID or name',
@@ -90,6 +93,17 @@
       
       filter:            'Filter',
       viewDetails:       'View details',
+      approve: 'Verify request',
+      reject: 'Reject request',
+      approveConfirmTitle: 'Confirm verification',
+      approveConfirmDescription: 'Are you sure you want to verify this request?',
+      rejectConfirmTitle: 'Reject verification request',
+      rejectConfirmDescription: 'Please provide a reason for rejecting this verification request.',
+      rejectionReason: 'Rejection reason',
+      rejectionReasonPlaceholder: 'Enter the reason for rejecting this request...',
+
+      reviewDecision: 'Verification decision',
+      reviewDecisionDescription: 'Review the data and documents before making a decision.',
       pendingSummary:    'Total pending requests',
       verifiedSummary:   'Total verified requests',
       page:              'Page',
@@ -144,6 +158,24 @@
         pending:        'Under review',
         approved:       'Verified',
         rejected:       'Rejected',
+      },
+
+      detail: {
+        identityDetail: 'Identity verification request',
+        extractedData: 'Extracted data',
+        fullName: 'Full name',
+        identityNumber: 'Identity number',
+        birthDate: 'Date of birth',
+        nationality: 'Nationality',
+        documents: 'Documents & Images',
+        identityDocument: 'Identity document',
+        selfie: 'Selfie',
+        noImage: 'No image available',
+        imageLoadError: 'Unable to load image',
+        nationalities: {
+          saudi: 'Saudi',
+          palestinian: 'Palestinian',
+        },
       },
     },
 

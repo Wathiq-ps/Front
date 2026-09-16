@@ -6,7 +6,7 @@ import { ChevronLeft } from 'lucide-react'
 import { useLang } from '@/context/LanguageContext'
 import { getVerificationConfig } from '@/features/verification/config/verification.config'
 
-export function VerificationBreadcrumbs({ type }) {
+export function VerificationBreadcrumbs({ type, currentLabel }) {
   const { t } = useLang()
   const config = type ? getVerificationConfig(type) : null
 
@@ -17,7 +17,7 @@ export function VerificationBreadcrumbs({ type }) {
     >
       <Link
         href="/dashboard"
-        className="transition-colors hover:text-brand-navy"
+        className="cursor-pointer transition-colors hover:text-brand-navy"
       >
         {t.home}
       </Link>
@@ -26,7 +26,7 @@ export function VerificationBreadcrumbs({ type }) {
 
       <Link
         href="/dashboard/verification"
-        className="transition-colors hover:text-brand-navy"
+        className="cursor-pointer transition-colors hover:text-brand-navy"
       >
         {t.verificationCenter.title}
       </Link>
@@ -36,7 +36,7 @@ export function VerificationBreadcrumbs({ type }) {
           <ChevronLeft size={14} aria-hidden="true" />
 
           <span className="text-ink-muted">
-            {t[config.labelKey]}
+            {currentLabel ?? t[config.labelKey]}
           </span>
         </>
       )}
