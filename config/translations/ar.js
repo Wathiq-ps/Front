@@ -167,6 +167,8 @@
         propertyType: 'نوع العقار',
         area: 'المساحة',
         city: 'المدينة',
+        propertyDocument: 'مستند ملكية العقار',
+        propertyDeed: 'صورة الصك العقاري',
         identityDetail: 'مراجعة طلب التحقق من الهوية',
         extractedData: 'البيانات المستخرجة',
         fullName: 'الاسم الكامل',
