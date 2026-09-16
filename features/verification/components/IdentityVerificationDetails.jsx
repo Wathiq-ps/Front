@@ -2,6 +2,7 @@
 
 import { CheckCircle2, X, Check, XCircle } from 'lucide-react'
 import { useState } from 'react'
+import { VerificationDetailHeader } from './VerificationDetailHeader'
 
 import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
@@ -43,21 +44,11 @@ export function IdentityVerificationDetails({ id }) {
     <div className="flex flex-col gap-5">
 
       <VerificationBreadcrumbs type="identity" currentLabel={t.verificationCenter.identityDetail}/>
-      <header className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <h1 className="text-[28px] font-bold leading-tight text-ink">
-            {typeof request.name === 'object'? request.name[locale] ?? request.name.ar: request.name}
-          </h1>
-
-          <p className="mt-1.5 text-[12px] text-ink-faint">
-            {request.id}
-          </p>
-        </div>
-
-        <Badge variant="gold">
-          {t.verificationCenter.statuses[request.status]}
-        </Badge>
-      </header>
+      <VerificationDetailHeader
+        name={getLocalizedName(request, locale)}
+        id={request.id}
+        status={t.verificationCenter.statuses[request.status]}
+      />
       <Card>
         <div className="border-b border-border pb-4">
             <h2 className="text-[20px] font-bold text-brand-navy">

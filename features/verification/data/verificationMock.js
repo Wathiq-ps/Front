@@ -75,6 +75,16 @@ export const verificationRequests = {
       submittedAt: '2026-08-12T08:12:00+03:00',
       status: 'pending',
       reference: '41029384756',
+      details: {
+        ownerName: 'أحمد محمد',
+        identityNumber: '1092837465',
+        propertyType: 'residential',
+        area: 250,
+        city: 'غزة',
+        documents: {
+          deed: null,
+        },
+    },
     },
     {
       id: 'PR-4798',
@@ -85,7 +95,17 @@ export const verificationRequests = {
       submittedAt: '2026-08-12T07:41:00+03:00',
       status: 'pending',
       reference: '41028473615',
+      details: {
+        ownerName: 'شركة واثق العقارية',
+        identityNumber: '1091827364',
+        propertyType: 'commercial',
+        area: 600,
+        city: 'خان يونس',
+        documents: {
+          deed: null,
+        },
     },
+  },
   ],
 
   lawyers: [

@@ -84,7 +84,8 @@
       types:             'Verification types',
       description:       'Manage and review pending verification requests',
       identityDetail:    'Identity verification request',
-
+      propertyDetail: 'Property ownership verification request',
+      
       searchPlaceholders: {
         identity: 'Search by user ID or name',
         property: 'Search by request ID, owner name or city',
@@ -161,6 +162,10 @@
       },
 
       detail: {
+        propertyOwner: 'Property owner',
+        propertyType: 'Property type',
+        area: 'Area',
+        city: 'City',
         identityDetail: 'Identity verification request',
         extractedData: 'Extracted data',
         fullName: 'Full name',
