@@ -166,6 +166,7 @@
         propertyOwner: 'اسم المالك',
         propertyType: 'نوع العقار',
         area: 'المساحة',
+        areaUnit: 'م²',
         city: 'المدينة',
         propertyDocument: 'مستند ملكية العقار',
         propertyDeed: 'صورة الصك العقاري',
@@ -184,6 +185,10 @@
           saudi: 'سعودي',
           palestinian: 'فلسطيني',
         },
+        cities: {
+          gaza: 'غزة',
+          khanYounis: 'خان يونس',
+        },        
       },
     },
 

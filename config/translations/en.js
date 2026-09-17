@@ -165,6 +165,7 @@
         propertyOwner: 'Property owner',
         propertyType: 'Property type',
         area: 'Area',
+        areaUnit: 'm²',
         city: 'City',
         propertyDocument: 'Property ownership document',
         propertyDeed: 'Property deed',
@@ -182,6 +183,10 @@
         nationalities: {
           saudi: 'Saudi',
           palestinian: 'Palestinian',
+        },
+        cities: {
+          gaza: 'Gaza',
+          khanYounis: 'Khan Younis',
         },
       },
     },

@@ -68,44 +68,56 @@ export const verificationRequests = {
   property: [
     {
       id: 'PR-4812',
-      name: 'أحمد محمد',
+      name: {
+        ar: 'أحمد محمد',
+        en: 'Ahmed Mohammed',
+      },
       propertyType: 'residential',
       area: 250,
-      city: 'غزة',
+      city: 'gaza',
       submittedAt: '2026-08-12T08:12:00+03:00',
       status: 'pending',
       reference: '41029384756',
       details: {
-        ownerName: 'أحمد محمد',
+        ownerName: {
+          ar: 'أحمد محمد',
+          en: 'Ahmed Mohammed',
+        },
         identityNumber: '1092837465',
         propertyType: 'residential',
         area: 250,
-        city: 'غزة',
+        city: 'gaza',
         documents: {
           deed: null,
         },
-    },
+      },
     },
     {
       id: 'PR-4798',
-      name: 'شركة واثق العقارية',
+      name: {
+        ar: 'شركة واثق العقارية',
+        en: 'Wathiq Real Estate Company',
+      },
       propertyType: 'commercial',
       area: 600,
-      city: 'خان يونس',
+      city: 'khanYounis',
       submittedAt: '2026-08-12T07:41:00+03:00',
       status: 'pending',
       reference: '41028473615',
       details: {
-        ownerName: 'شركة واثق العقارية',
+        ownerName: {
+          ar: 'شركة واثق العقارية',
+          en: 'Wathiq Real Estate Company',
+        },
         identityNumber: '1091827364',
         propertyType: 'commercial',
         area: 600,
-        city: 'خان يونس',
+        city: 'khanYounis',
         documents: {
           deed: null,
         },
+      },
     },
-  },
   ],
 
   lawyers: [

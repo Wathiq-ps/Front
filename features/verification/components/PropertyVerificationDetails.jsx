@@ -9,7 +9,7 @@ import { VerificationDocumentPreview } from './VerificationDocumentPreview'
 import { Card } from '@/components/ui/Card'
 import { VerificationDecisionCard } from './VerificationDecisionCard'
 export function PropertyVerificationDetails({ id }) {
-  const { t } = useLang()
+  const { t, locale } = useLang()
   const request = verificationRequests.property.find(
     (item) => item.id === id,
   )
@@ -32,7 +32,11 @@ export function PropertyVerificationDetails({ id }) {
       />
 
       <VerificationDetailHeader
-        name={request.name}
+        name={
+            typeof request.name === 'object'
+            ? request.name[locale] ?? request.name.ar
+            : request.name
+        }
         id={request.id}
         status={t.verificationCenter.statuses[request.status]}
       />

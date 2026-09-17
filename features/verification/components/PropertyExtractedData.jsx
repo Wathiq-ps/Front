@@ -6,12 +6,19 @@ import { Card } from '@/components/ui/Card'
 import { useLang } from '@/context/LanguageContext'
 
 export function PropertyExtractedData({ details }) {
-  const { t } = useLang()
+  const { t, locale } = useLang()
+  const getLocalizedValue = (value) => {
+    if (!value) return '—'
 
+    if (typeof value === 'object') {
+        return value[locale] ?? value.ar ?? value.en ?? '—'
+    }
+    return value
+    }
   const fields = [
     {
       label: t.verificationCenter.detail.propertyOwner,
-      value: details?.ownerName ?? '—',
+      value: getLocalizedValue(details?.ownerName),
     },
     {
       label: t.verificationCenter.detail.identityNumber,
@@ -27,13 +34,15 @@ export function PropertyExtractedData({ details }) {
           : '—',
     },
     {
-      label: t.verificationCenter.detail.area,
-      value: details?.area ? `${details.area} م²` : '—',
-      dir: 'ltr',
+        label: t.verificationCenter.detail.area,
+        value: details?.area
+        ? `${details.area} ${t.verificationCenter.detail.areaUnit}`
+        : '—',
+        dir: 'ltr',
     },
     {
       label: t.verificationCenter.detail.city,
-      value: details?.city ?? '—',
+      value: getLocalizedValue(details?.city),
     },
   ]
 
