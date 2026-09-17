@@ -35,10 +35,14 @@ export function PropertyExtractedData({ details }) {
     },
     {
         label: t.verificationCenter.detail.area,
-        value: details?.area
-        ? `${details.area} ${t.verificationCenter.detail.areaUnit}`
-        : '—',
-        dir: 'ltr',
+        value: details?.area ? (
+        <>
+            <span dir="ltr">{details.area}</span>{' '}
+            <span>{t.verificationCenter.detail.areaUnit}</span>
+            </>
+        ) : (
+            '—'
+        ),
     },
     {
       label: t.verificationCenter.detail.city,

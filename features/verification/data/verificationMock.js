@@ -74,7 +74,10 @@ export const verificationRequests = {
       },
       propertyType: 'residential',
       area: 250,
-      city: 'gaza',
+      city: {
+        ar: 'غزة',
+        en: 'Gaza',
+      },
       submittedAt: '2026-08-12T08:12:00+03:00',
       status: 'pending',
       reference: '41029384756',
@@ -86,7 +89,10 @@ export const verificationRequests = {
         identityNumber: '1092837465',
         propertyType: 'residential',
         area: 250,
-        city: 'gaza',
+        city: {
+          ar: 'غزة',
+          en: 'Gaza',
+        },
         documents: {
           deed: null,
         },
@@ -100,7 +106,10 @@ export const verificationRequests = {
       },
       propertyType: 'commercial',
       area: 600,
-      city: 'khanYounis',
+      city: {
+        ar: 'خان يونس',
+        en: 'Khan Younis',
+      },
       submittedAt: '2026-08-12T07:41:00+03:00',
       status: 'pending',
       reference: '41028473615',
@@ -112,7 +121,10 @@ export const verificationRequests = {
         identityNumber: '1091827364',
         propertyType: 'commercial',
         area: 600,
-        city: 'khanYounis',
+        city: {
+          ar: 'خان يونس',
+          en: 'Khan Younis',
+        },
         documents: {
           deed: null,
         },
