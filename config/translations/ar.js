@@ -84,7 +84,8 @@
       types:             'أنواع التحقق',
       description:       'إدارة ومراجعة طلبات التحقق المعلقة',
       identityDetail:    'مراجعة طلب التحقق من الهوية',
-
+      propertyDetail: 'مراجعة طلب التحقق من ملكية العقار',
+      
       searchPlaceholders: {
         identity: 'بحث برقم المستخدم أو الاسم',
         property: 'بحث برقم الطلب أو اسم المالك أو المدينة',
@@ -162,6 +163,13 @@
       },
       
       detail: {
+        propertyOwner: 'اسم المالك',
+        propertyType: 'نوع العقار',
+        area: 'المساحة',
+        areaUnit: 'م²',
+        city: 'المدينة',
+        propertyDocument: 'مستند ملكية العقار',
+        propertyDeed: 'صورة الصك العقاري',
         identityDetail: 'مراجعة طلب التحقق من الهوية',
         extractedData: 'البيانات المستخرجة',
         fullName: 'الاسم الكامل',
@@ -177,6 +185,10 @@
           saudi: 'سعودي',
           palestinian: 'فلسطيني',
         },
+        cities: {
+          gaza: 'غزة',
+          khanYounis: 'خان يونس',
+        },        
       },
     },
 

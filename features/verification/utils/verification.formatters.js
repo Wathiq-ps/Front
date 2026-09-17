@@ -73,7 +73,9 @@ export const CELL_RENDERERS = {
 
     area: (request) => request.area,
 
-    city: (request) => request.city,
+    city: (request, { locale }) =>  typeof request.city === 'object'
+      ? request.city[locale] ?? request.city.ar ?? request.city.en ?? ''
+      : request.city ?? '',
 
     submittedAt: formatSubmittedAt,
 
