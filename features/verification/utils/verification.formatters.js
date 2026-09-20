@@ -8,6 +8,14 @@ export function getLocalizedName(request, locale) {
   return request.name ?? ''
 }
 
+export function getSearchableText(value) {
+  if (typeof value === 'object' && value !== null) {
+    return Object.values(value).join(' ')
+  }
+
+  return String(value ?? '')
+}
+
 function getVerificationLabel(t, group, value) {
   return t.verificationCenter[group]?.[value] ?? value
 }
