@@ -141,6 +141,16 @@ export const verificationRequests = {
       submittedAt: '2026-08-12T08:05:00+03:00',
       status: 'pending',
       reference: 'LIC-49201',
+      details: {
+        fullName: 'عبدالله الدوسري',
+        licenseNumber: 'LIC-49201',
+        specialty: 'realEstate',
+        phone: '0590000000',
+        email: 'abdullah@example.com',
+        documents: {
+          license: null,
+        },
+      },
     },
     {
       id: 'LAW-49188',
@@ -150,6 +160,16 @@ export const verificationRequests = {
       submittedAt: '2026-08-12T07:36:00+03:00',
       status: 'pending',
       reference: 'LIC-49188',
+      details: {
+        fullName: 'فهد السالم',
+        licenseNumber: 'LIC-49188',
+        specialty: 'contractNotary',
+        phone: '0590000001',
+        email: 'fahad@example.com',
+        documents: {
+          license: null,
+        },
+      },
     },
   ],
 }
