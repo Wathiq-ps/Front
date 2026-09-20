@@ -7,6 +7,8 @@ import { VerificationBreadcrumbs } from './VerificationBreadcrumbs'
 import { VerificationDetailHeader } from './VerificationDetailHeader'
 import { VerificationExtractedData } from './VerificationExtractedData'
 import { VerificationDocumentPreview } from './VerificationDocumentPreview'
+import { VerificationDecisionCard } from './VerificationDecisionCard'
+
 import { Card } from '@/components/ui/Card'
 export function LawyerVerificationDetails({ id }) {
   const { t } = useLang()
@@ -92,6 +94,7 @@ export function LawyerVerificationDetails({ id }) {
             />
         </div>
     </Card>
+    <VerificationDecisionCard />
     </div>
   )
 }
