@@ -63,16 +63,6 @@ export function VerificationList({ type }) {
   )
   const context = { locale, t, requests }
 
-  useEffect(() => {
-    setCurrentPage(1)
-    setSearchQuery('')
-    setStatusFilter('all')
-  }, [type])
-
-  useEffect(() => {
-    setCurrentPage((page) => Math.min(page, totalPages))
-  }, [totalPages])
-
   const pendingCount = getTotalVerificationCount()
   const verifiedCount = Object.values(verificationRequests)
     .flat()
