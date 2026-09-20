@@ -170,6 +170,9 @@
         propertyDocument: 'Property ownership document',
         propertyDeed: 'Property deed',
 
+        lawyerDocument: 'Lawyer accreditation document',
+        licenseDocument: 'Lawyer license',
+        
         identityDetail: 'Identity verification request',
 
         lawyerDetail: 'Lawyer accreditation request',

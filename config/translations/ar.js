@@ -171,6 +171,9 @@
         propertyDocument: 'مستند ملكية العقار',
         propertyDeed: 'صورة الصك العقاري',
 
+        lawyerDocument: 'مستند اعتماد المحامي',
+        licenseDocument: 'صورة ترخيص المحامي',
+        
         identityDetail: 'مراجعة طلب التحقق من الهوية',
 
         lawyerDetail: 'مراجعة طلب اعتماد المحامي',

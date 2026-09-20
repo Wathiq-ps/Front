@@ -6,7 +6,8 @@ import { verificationRequests } from '@/features/verification/data/verificationM
 import { VerificationBreadcrumbs } from './VerificationBreadcrumbs'
 import { VerificationDetailHeader } from './VerificationDetailHeader'
 import { VerificationExtractedData } from './VerificationExtractedData'
-
+import { VerificationDocumentPreview } from './VerificationDocumentPreview'
+import { Card } from '@/components/ui/Card'
 export function LawyerVerificationDetails({ id }) {
   const { t } = useLang()
 
@@ -73,6 +74,24 @@ export function LawyerVerificationDetails({ id }) {
           },
         ]}
       />
+      <Card>
+        <div className="border-b border-border pb-4">
+            <h2 className="text-[20px] font-bold text-brand-navy">
+            {t.verificationCenter.detail.lawyerDocument}
+            </h2>
+        </div>
+
+        <div className="mt-5">
+            <h3 className="mb-3 text-sm font-semibold text-ink">
+            {t.verificationCenter.detail.licenseDocument}
+            </h3>
+
+            <VerificationDocumentPreview
+            src={details.documents?.license}
+            alt={t.verificationCenter.detail.licenseDocument}
+            />
+        </div>
+    </Card>
     </div>
   )
 }
