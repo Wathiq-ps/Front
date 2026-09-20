@@ -4,7 +4,7 @@ import { verificationRequests } from '@/features/verification/data/verificationM
 
 import { VerificationBreadcrumbs } from './VerificationBreadcrumbs'
 import { VerificationDetailHeader } from './VerificationDetailHeader'
-import { PropertyExtractedData } from './PropertyExtractedData'
+import { VerificationExtractedData } from './VerificationExtractedData'
 import { VerificationDocumentPreview } from './VerificationDocumentPreview'
 import { Card } from '@/components/ui/Card'
 import { VerificationDecisionCard } from './VerificationDecisionCard'
@@ -41,7 +41,47 @@ export function PropertyVerificationDetails({ id }) {
         status={t.verificationCenter.statuses[request.status]}
       />
 
-      <PropertyExtractedData details={details} />
+      <VerificationExtractedData
+        title={t.verificationCenter.detail.extractedData}
+        fields={[
+          {
+            key: 'ownerName',
+            label: t.verificationCenter.detail.propertyOwner,
+            value: typeof details.ownerName === 'object'
+              ? details.ownerName[locale] ?? details.ownerName.ar
+              : details.ownerName ?? '—',
+          },
+          {
+            key: 'identityNumber',
+            label: t.verificationCenter.detail.identityNumber,
+            value: details.identityNumber ?? '—',
+            dir: 'ltr',
+          },
+          {
+            key: 'propertyType',
+            label: t.verificationCenter.detail.propertyType,
+            value: details.propertyType
+              ? t.verificationCenter.propertyTypes[details.propertyType] ??
+                details.propertyType
+              : '—',
+          },
+          {
+            key: 'area',
+            label: t.verificationCenter.detail.area,
+            value: details.area
+              ? `${details.area} ${t.verificationCenter.detail.areaUnit}` 
+              : '—',
+           
+          },
+          {
+            key: 'city',
+            label: t.verificationCenter.detail.city,
+            value: typeof details.city === 'object'
+              ? details.city[locale] ?? details.city.ar
+              : details.city ?? '—',
+          },
+        ]}
+      />
       <Card>
         <div className="border-b border-border pb-4">
             <h2 className="text-[20px] font-bold text-brand-navy">

@@ -14,6 +14,7 @@ import {
 } from '@/features/verification/config/verification.config'
 import { verificationRequests } from '@/features/verification/data/verificationMock'
 import { renderVerificationCell } from '@/features/verification/utils/verification.formatters'
+import { getSearchableText } from '@/features/verification/utils/verification.formatters'
 
 import { VerificationBreadcrumbs } from './VerificationBreadcrumbs'
 import { VerificationTabs } from './VerificationTabs'
@@ -42,7 +43,7 @@ export function VerificationList({ type }) {
   const matchesSearch =
     !query ||
     searchFields.some((field) =>
-      String(request[field] ?? '').toLowerCase().includes(query),
+     getSearchableText(request[field]).toLowerCase().includes(query),
     )
 
   const matchesStatus =
