@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { ArrowUpRight, Search, SlidersHorizontal, BadgeCheck, Clock3 } from 'lucide-react'
-
+import { verificationRequests } from '@/features/verification/data/verificationMock'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { useLang } from '@/context/LanguageContext'
@@ -12,7 +12,7 @@ import {
   getVerificationConfig,
   getTotalVerificationCount,
 } from '@/features/verification/config/verification.config'
-import { verificationRequests } from '@/features/verification/data/verificationMock'
+
 import { renderVerificationCell } from '@/features/verification/utils/verification.formatters'
 import { getSearchableText } from '@/features/verification/utils/verification.formatters'
 
@@ -22,7 +22,7 @@ import { VerificationTabs } from './VerificationTabs'
 const ITEMS_PER_PAGE = 5
 
 const SEARCH_FIELDS = {
-  identity: ['id', 'name'],
+  identity: ['id', 'documentNumber', 'email'],
   property: ['id', 'name', 'city'],
   lawyers: ['id', 'name', 'licenseNumber'],
 }
@@ -32,10 +32,59 @@ export function VerificationList({ type }) {
   const [currentPage, setCurrentPage] = useState(1)
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
+  
+  const [identityRequests, setIdentityRequests] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(null)
+
   const config = getVerificationConfig(type)
-  const requests = [...(verificationRequests[config.key] ?? [])].sort(
-    (a, b) => new Date(a.submittedAt) - new Date(b.submittedAt),
-  )
+  const requests =
+  config.key === 'identity'
+    ? identityRequests
+    : (verificationRequests[config.key] ?? []).sort(
+        (a, b) => new Date(a.submittedAt) - new Date(b.submittedAt),
+      )
+  useEffect(() => {
+  if (config.key !== 'identity') return
+
+  const fetchIdentityRequests = async () => {
+    try {
+      setIsLoading(true)
+      setError(null)
+      const response = await fetch('/api/verification/identity')
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch identity verification requests`)
+      }
+
+      const result = await response.json()
+
+      console.log('IDENTITY API RESPONSE:', result)
+
+      const items = Array.isArray(result)
+        ? result
+        : result.data ?? []
+
+      const mappedRequests = items.map((item) => ({
+        id: item.id,
+        documentNumber: item.document_number,
+        status: item.status,
+        submittedAt: item.submitted_at,
+        email: item.user?.email ?? '',
+        phone: item.user?.phone ?? '',
+        type: item.type,
+      }))
+      setIdentityRequests(mappedRequests)
+    } catch (err) {
+      console.error('Failed to fetch identity verification requests:', err)
+      setError(err.message)
+      setIdentityRequests([])
+    } finally {
+      setIsLoading(false)
+    }
+  }
+  fetchIdentityRequests()
+}, [config.key])    
   const filteredRequests = requests.filter((request) => {
   const query = searchQuery.trim().toLowerCase()
   const searchFields = SEARCH_FIELDS[config.key] ?? []
@@ -63,10 +112,17 @@ export function VerificationList({ type }) {
   )
   const context = { locale, t, requests }
 
-  const pendingCount = getTotalVerificationCount()
-  const verifiedCount = Object.values(verificationRequests)
-    .flat()
-    .filter((request) => request.status === 'approved').length
+const pendingCount =
+  config.key === 'identity'
+    ? identityRequests.filter((request) => request.status === 'pending').length
+    : getTotalVerificationCount()
+
+const verifiedCount =
+  config.key === 'identity'
+    ? identityRequests.filter((request) => request.status === 'approved').length
+    : Object.values(verificationRequests)
+        .flat()
+        .filter((request) => request.status === 'approved').length
 
   return (
     <div className="flex flex-col gap-5">
@@ -187,7 +243,17 @@ export function VerificationList({ type }) {
             </label>
           </div>
         </div>
+        {config.key === 'identity' && isLoading && (
+          <div className="px-6 py-8 text-center text-sm text-ink-faint">
+            Loading...
+          </div>
+        )}
 
+        {config.key === 'identity' && error && (
+          <div className="px-6 py-8 text-center text-sm text-red-600">
+            {error}
+          </div>
+        )}
         <div className="overflow-x-auto">
           <table className="w-full min-w-[760px]">
             <thead className="bg-surface">
