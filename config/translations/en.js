@@ -169,21 +169,35 @@
         city: 'City',
         propertyDocument: 'Property ownership document',
         propertyDeed: 'Property deed',
+
+        lawyerDocument: 'Lawyer accreditation document',
+        licenseDocument: 'Lawyer license',
+        
         identityDetail: 'Identity verification request',
+
+        lawyerDetail: 'Lawyer accreditation request',
+        licenseNumber: 'License number',
+        specialty: 'Specialty',
+        phone: 'Phone number',
+        email: 'Email',
+
         extractedData: 'Extracted data',
         fullName: 'Full name',
         identityNumber: 'Identity number',
         birthDate: 'Date of birth',
         nationality: 'Nationality',
+
         documents: 'Documents & Images',
         identityDocument: 'Identity document',
         selfie: 'Selfie',
         noImage: 'No image available',
         imageLoadError: 'Unable to load image',
+        
         nationalities: {
           saudi: 'Saudi',
           palestinian: 'Palestinian',
         },
+
         cities: {
           gaza: 'Gaza',
           khanYounis: 'Khan Younis',

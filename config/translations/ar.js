@@ -170,25 +170,39 @@
         city: 'المدينة',
         propertyDocument: 'مستند ملكية العقار',
         propertyDeed: 'صورة الصك العقاري',
+
+        lawyerDocument: 'مستند اعتماد المحامي',
+        licenseDocument: 'صورة ترخيص المحامي',
+        
         identityDetail: 'مراجعة طلب التحقق من الهوية',
+
+        lawyerDetail: 'مراجعة طلب اعتماد المحامي',
+        licenseNumber: 'رقم الترخيص',
+        specialty: 'التخصص',
+        phone: 'رقم الهاتف',
+        email: 'البريد الإلكتروني',
+
         extractedData: 'البيانات المستخرجة',
         fullName: 'الاسم الكامل',
         identityNumber: 'رقم الهوية',
         birthDate: 'تاريخ الميلاد',
         nationality: 'الجنسية',
+
         documents: 'المستندات والصور',
         identityDocument: 'صورة مستند الهوية',
         selfie: 'صورة السيلفي',
         noImage: 'لا توجد صورة',
         imageLoadError: 'تعذر تحميل الصورة',
+        
         nationalities: {
           saudi: 'سعودي',
           palestinian: 'فلسطيني',
         },
+
         cities: {
           gaza: 'غزة',
           khanYounis: 'خان يونس',
-        },        
+        },
       },
     },
 
