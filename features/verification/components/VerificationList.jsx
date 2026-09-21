@@ -34,6 +34,11 @@ export function VerificationList({ type }) {
   const [statusFilter, setStatusFilter] = useState('all')
   
   const [identityRequests, setIdentityRequests] = useState([])
+  const [identityMeta, setIdentityMeta] = useState({
+    total: 0,
+    currentPage: 1,
+    lastPage: 1,
+  })
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
 
@@ -65,6 +70,14 @@ export function VerificationList({ type }) {
         ? result
         : result.data ?? []
 
+      if (!Array.isArray(result)) {
+        setIdentityMeta({
+          total: result.meta?.total ?? 0,
+          currentPage: result.meta?.current_page ?? 1,
+          lastPage: result.meta?.last_page ?? 1,
+        })
+      }
+
       const mappedRequests = items.map((item) => ({
         id: item.id,
         documentNumber: item.document_number,
@@ -79,6 +92,12 @@ export function VerificationList({ type }) {
       console.error('Failed to fetch identity verification requests:', err)
       setError(err.message)
       setIdentityRequests([])
+
+      setIdentityMeta({
+        total: 0,
+        currentPage: 1,
+        lastPage: 1,
+      })
     } finally {
       setIsLoading(false)
     }
@@ -186,7 +205,10 @@ const verifiedCount =
               {t[config.labelKey]}
             </h2>
             <p className="mt-1 text-[12px] text-ink-faint">
-              {config.count} {t.verificationCenter.pendingRequests}
+               {config.key === 'identity'
+                ? identityMeta.total
+                : config.count}{' '}
+               {t.verificationCenter.pendingRequests}
             </p>
           </div>
 
