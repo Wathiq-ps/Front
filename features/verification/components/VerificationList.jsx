@@ -56,7 +56,7 @@ export function VerificationList({ type }) {
     try {
       setIsLoading(true)
       setError(null)
-      const response = await fetch('/api/verification/identity')
+      const response = await fetch(`/api/verification/identity?page=${currentPage}`,)
 
       if (!response.ok) {
         throw new Error(`Failed to fetch identity verification requests`)
@@ -103,7 +103,7 @@ export function VerificationList({ type }) {
     }
   }
   fetchIdentityRequests()
-}, [config.key])    
+}, [config.key, currentPage])
   const filteredRequests = requests.filter((request) => {
   const query = searchQuery.trim().toLowerCase()
   const searchFields = SEARCH_FIELDS[config.key] ?? []
@@ -121,14 +121,21 @@ export function VerificationList({ type }) {
   return matchesSearch && matchesStatus
 })
   const activeColumns = getVerificationColumns(config.key)
-  const totalPages = Math.max(
-    1,
-    Math.ceil(filteredRequests.length / ITEMS_PER_PAGE),
-  )
-  const paginatedRequests = filteredRequests.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE,
-  )
+  const totalPages =
+    config.key === 'identity'
+      ? identityMeta.lastPage
+      : Math.max(
+          1,
+          Math.ceil(filteredRequests.length / ITEMS_PER_PAGE),
+        )
+
+  const paginatedRequests =
+    config.key === 'identity'
+      ? filteredRequests
+      : filteredRequests.slice(
+          (currentPage - 1) * ITEMS_PER_PAGE,
+          currentPage * ITEMS_PER_PAGE,
+        )
   const context = { locale, t, requests }
 
 const pendingCount =

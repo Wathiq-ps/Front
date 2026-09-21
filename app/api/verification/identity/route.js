@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 
 import { backendFetch } from '@/lib/api/server'
 
-export async function GET() {
+export async function GET(request) {
   try {
     const headers = {}
 
@@ -13,8 +13,11 @@ export async function GET() {
       headers.Authorization = `Bearer ${process.env.WATHIQ_DEV_ADMIN_ACCESS_TOKEN}`
     }
 
+    const { searchParams } = new URL(request.url)
+    const page = searchParams.get('page') || '1'
+
     const response = await backendFetch(
-      '/api/v1/admin/kyc/documents',
+      `/api/v1/admin/kyc/documents?page=${page}`,
       {
         headers,
       },
