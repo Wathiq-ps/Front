@@ -37,7 +37,7 @@ The current auth endpoints are configurable through:
 
 ## Phase 1 data
 
-Dashboard content currently comes from `features/dashboard/data/dashboardMock.js`. This is intentional until the Backend team provides the dashboard API contract. API integration should happen in a service/hook layer and should not require rewriting the presentational dashboard sections.
+Dashboard content currently comes from `features/dashboard/data/dashboardMock.js`. Identity Verification is now integrated with the Backend API.
 
 ## Design system
 
