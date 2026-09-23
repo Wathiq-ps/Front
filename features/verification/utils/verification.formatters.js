@@ -54,9 +54,7 @@ function formatSubmittedAt(request, { locale }) {
 
 export const CELL_RENDERERS = {
   identity: {
-    user: (request, { locale }) =>
-      getLocalizedName(request, locale),
-
+    user: (request) => request.name || request.phone || request.email || '—',
     documentType: getDocumentTypeLabel,
 
     submittedAt: formatSubmittedAt,

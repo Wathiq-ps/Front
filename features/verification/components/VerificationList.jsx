@@ -10,11 +10,9 @@ import { useLang } from '@/context/LanguageContext'
 import {
   getVerificationColumns,
   getVerificationConfig,
-  getTotalVerificationCount,
 } from '@/features/verification/config/verification.config'
 
-import { renderVerificationCell } from '@/features/verification/utils/verification.formatters'
-import { getSearchableText } from '@/features/verification/utils/verification.formatters'
+import { renderVerificationCell,getSearchableText } from '@/features/verification/utils/verification.formatters'
 
 import { VerificationBreadcrumbs } from './VerificationBreadcrumbs'
 import { VerificationTabs } from './VerificationTabs'
@@ -64,8 +62,6 @@ export function VerificationList({ type }) {
 
       const result = await response.json()
 
-      console.log('IDENTITY API RESPONSE:', result)
-
       const items = Array.isArray(result)
         ? result
         : result.data ?? []
@@ -80,7 +76,8 @@ export function VerificationList({ type }) {
 
       const mappedRequests = items.map((item) => ({
         id: item.id,
-        documentNumber: item.document_number,
+        user: item.user?.name ?? '—',
+        documentType: item.type,
         status: item.status,
         submittedAt: item.submitted_at,
         email: item.user?.email ?? '',
@@ -90,7 +87,7 @@ export function VerificationList({ type }) {
       setIdentityRequests(mappedRequests)
     } catch (err) {
       console.error('Failed to fetch identity verification requests:', err)
-      setError(err.message)
+      setError(t.verificationCenter.fetchError)
       setIdentityRequests([])
 
       setIdentityMeta({
@@ -103,7 +100,7 @@ export function VerificationList({ type }) {
     }
   }
   fetchIdentityRequests()
-}, [config.key, currentPage])
+}, [config.key, currentPage,locale])
   const filteredRequests = requests.filter((request) => {
   const query = searchQuery.trim().toLowerCase()
   const searchFields = SEARCH_FIELDS[config.key] ?? []
@@ -203,7 +200,7 @@ const verifiedCount =
         </Card>
       </div>
 
-      <VerificationTabs />
+      <VerificationTabs identityCount={identityMeta.total}/>
 
       <Card className="overflow-hidden p-0">
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border px-6 py-5">
@@ -272,17 +269,7 @@ const verifiedCount =
             </label>
           </div>
         </div>
-        {config.key === 'identity' && isLoading && (
-          <div className="px-6 py-8 text-center text-sm text-ink-faint">
-            Loading...
-          </div>
-        )}
-
-        {config.key === 'identity' && error && (
-          <div className="px-6 py-8 text-center text-sm text-red-600">
-            {error}
-          </div>
-        )}
+        
         <div className="overflow-x-auto">
           <table className="w-full min-w-[760px]">
             <thead className="bg-surface">
@@ -300,7 +287,25 @@ const verifiedCount =
             </thead>
 
             <tbody>
-              {paginatedRequests.length > 0 ? (
+                {isLoading ? (
+                  <tr>
+                    <td
+                      colSpan={activeColumns.length + 1}
+                      className="px-5 py-12 text-center text-sm text-ink-faint"
+                    >
+                      {t.loading}
+                    </td>
+                  </tr>
+                ) : error ? (
+                  <tr>
+                    <td
+                      colSpan={activeColumns.length + 1}
+                      className="px-5 py-12 text-center text-sm text-red-600"
+                    >
+                      {error}
+                    </td>
+                  </tr>
+                ) : paginatedRequests.length > 0 ? (
                   paginatedRequests.map((request) => (
                     <tr
                       key={request.id}
@@ -341,7 +346,7 @@ const verifiedCount =
                     </td>
                   </tr>
                 )}
-            </tbody>
+              </tbody>
           </table>
         </div>
 

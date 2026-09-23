@@ -1,4 +1,6 @@
 'use client'
+
+import { useEffect, useState } from 'react'
 import { logout } from '@/features/auth/services/authService'
 import Link            from 'next/link'
 import { useSidebar }  from '@/context/SidebarContext'
@@ -6,7 +8,7 @@ import { useLang }     from '@/context/LanguageContext'
 import { usePathname } from 'next/navigation'
 import { WathiqLogo }  from '@/components/ui/WathiqLogo'
 import { cn }          from '@/lib/utils'
-import { getTotalVerificationCount } from '@/features/verification/config/verification.config'
+import { VERIFICATION_TYPES } from '@/features/verification/config/verification.config'
 
 /* ── Nav groups matching the reference image ── */
 const NAV_GROUPS = [
@@ -16,8 +18,8 @@ const NAV_GROUPS = [
   },
   {
     groupKey: 'verification',
-    items: [{ key: 'verifyCenter', href: '/dashboard/verification', icon: 'shield', badge: getTotalVerificationCount() }],
-  },
+    items: [{ key: 'verifyCenter', href: '/dashboard/verification', icon: 'shield' }],  
+  },  
   {
     groupKey: 'management',
     items: [
@@ -111,6 +113,29 @@ export function Sidebar() {
   const { t }    = useLang()
   const pathname = usePathname()
   const isRtl    = t.dir === 'rtl'
+  const [identityCount, setIdentityCount] = useState(0)
+
+  useEffect(() => {
+    const fetchIdentityCount = async () => {
+      try {
+        const response = await fetch('/api/verification/identity?page=1')
+
+        if (!response.ok) return
+
+        const result = await response.json()
+
+        setIdentityCount(result.meta?.total ?? 0)
+      } catch {
+        setIdentityCount(0)
+      }
+    }
+
+    fetchIdentityCount()
+  }, [])
+  const verificationCount =
+  identityCount +
+  VERIFICATION_TYPES.property.count +
+  VERIFICATION_TYPES.lawyers.count
 
   return (
     <>
@@ -159,7 +184,7 @@ export function Sidebar() {
               )}
               {/* Items */}
               {group.items.map(item => (
-                <NavItem key={item.key} item={item} pathname={pathname} t={t} isRtl={isRtl} />
+                <NavItem key={item.key} item={item.key === 'verifyCenter'? { ...item, badge: verificationCount } : item} pathname={pathname} t={t} isRtl={isRtl} />
               ))}
             </div>
           ))}

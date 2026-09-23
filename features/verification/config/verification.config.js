@@ -3,7 +3,6 @@ export const VERIFICATION_TYPES = {
     key: 'identity',
     labelKey: 'identityCheck',
     listHref: '/dashboard/verification/identity',
-    count: 21,
     columns: ['user', 'documentType', 'submittedAt', 'status'],
   },
 
