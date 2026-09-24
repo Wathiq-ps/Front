@@ -3,18 +3,16 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { ArrowUpRight, Search, SlidersHorizontal, BadgeCheck, Clock3 } from 'lucide-react'
-
+import { verificationRequests } from '@/features/verification/data/verificationMock'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { useLang } from '@/context/LanguageContext'
 import {
   getVerificationColumns,
   getVerificationConfig,
-  getTotalVerificationCount,
 } from '@/features/verification/config/verification.config'
-import { verificationRequests } from '@/features/verification/data/verificationMock'
-import { renderVerificationCell } from '@/features/verification/utils/verification.formatters'
-import { getSearchableText } from '@/features/verification/utils/verification.formatters'
+
+import { renderVerificationCell,getSearchableText } from '@/features/verification/utils/verification.formatters'
 
 import { VerificationBreadcrumbs } from './VerificationBreadcrumbs'
 import { VerificationTabs } from './VerificationTabs'
@@ -22,7 +20,7 @@ import { VerificationTabs } from './VerificationTabs'
 const ITEMS_PER_PAGE = 5
 
 const SEARCH_FIELDS = {
-  identity: ['id', 'name'],
+  identity: ['id', 'documentNumber', 'email'],
   property: ['id', 'name', 'city'],
   lawyers: ['id', 'name', 'licenseNumber'],
 }
@@ -32,10 +30,77 @@ export function VerificationList({ type }) {
   const [currentPage, setCurrentPage] = useState(1)
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
+  
+  const [identityRequests, setIdentityRequests] = useState([])
+  const [identityMeta, setIdentityMeta] = useState({
+    total: 0,
+    currentPage: 1,
+    lastPage: 1,
+  })
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(null)
+
   const config = getVerificationConfig(type)
-  const requests = [...(verificationRequests[config.key] ?? [])].sort(
-    (a, b) => new Date(a.submittedAt) - new Date(b.submittedAt),
-  )
+  const requests =
+  config.key === 'identity'
+    ? identityRequests
+    : (verificationRequests[config.key] ?? []).sort(
+        (a, b) => new Date(a.submittedAt) - new Date(b.submittedAt),
+      )
+  useEffect(() => {
+  if (config.key !== 'identity') return
+
+  const fetchIdentityRequests = async () => {
+    try {
+      setIsLoading(true)
+      setError(null)
+      const response = await fetch(`/api/verification/identity?page=${currentPage}`,)
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch identity verification requests`)
+      }
+
+      const result = await response.json()
+
+      const items = Array.isArray(result)
+        ? result
+        : result.data ?? []
+
+      if (!Array.isArray(result)) {
+        setIdentityMeta({
+          total: result.meta?.total ?? 0,
+          currentPage: result.meta?.current_page ?? 1,
+          lastPage: result.meta?.last_page ?? 1,
+        })
+      }
+
+      const mappedRequests = items.map((item) => ({
+        id: item.id,
+        user: item.user?.name ?? '—',
+        documentType: item.type,
+        status: item.status,
+        submittedAt: item.submitted_at,
+        email: item.user?.email ?? '',
+        phone: item.user?.phone ?? '',
+        type: item.type,
+      }))
+      setIdentityRequests(mappedRequests)
+    } catch (err) {
+      console.error('Failed to fetch identity verification requests:', err)
+      setError(t.verificationCenter.fetchError)
+      setIdentityRequests([])
+
+      setIdentityMeta({
+        total: 0,
+        currentPage: 1,
+        lastPage: 1,
+      })
+    } finally {
+      setIsLoading(false)
+    }
+  }
+  fetchIdentityRequests()
+}, [config.key, currentPage,locale])
   const filteredRequests = requests.filter((request) => {
   const query = searchQuery.trim().toLowerCase()
   const searchFields = SEARCH_FIELDS[config.key] ?? []
@@ -53,20 +118,34 @@ export function VerificationList({ type }) {
   return matchesSearch && matchesStatus
 })
   const activeColumns = getVerificationColumns(config.key)
-  const totalPages = Math.max(
-    1,
-    Math.ceil(filteredRequests.length / ITEMS_PER_PAGE),
-  )
-  const paginatedRequests = filteredRequests.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE,
-  )
+  const totalPages =
+    config.key === 'identity'
+      ? identityMeta.lastPage
+      : Math.max(
+          1,
+          Math.ceil(filteredRequests.length / ITEMS_PER_PAGE),
+        )
+
+  const paginatedRequests =
+    config.key === 'identity'
+      ? filteredRequests
+      : filteredRequests.slice(
+          (currentPage - 1) * ITEMS_PER_PAGE,
+          currentPage * ITEMS_PER_PAGE,
+        )
   const context = { locale, t, requests }
 
-  const pendingCount = getTotalVerificationCount()
-  const verifiedCount = Object.values(verificationRequests)
-    .flat()
-    .filter((request) => request.status === 'approved').length
+const pendingCount =
+  config.key === 'identity'
+    ? identityRequests.filter((request) => request.status === 'pending').length
+    : config.count ?? 0
+
+const verifiedCount =
+  config.key === 'identity'
+    ? identityRequests.filter((request) => request.status === 'approved').length
+    : Object.values(verificationRequests)
+        .flat()
+        .filter((request) => request.status === 'approved').length
 
   return (
     <div className="flex flex-col gap-5">
@@ -121,7 +200,7 @@ export function VerificationList({ type }) {
         </Card>
       </div>
 
-      <VerificationTabs />
+      <VerificationTabs identityCount={identityMeta.total}/>
 
       <Card className="overflow-hidden p-0">
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border px-6 py-5">
@@ -130,7 +209,10 @@ export function VerificationList({ type }) {
               {t[config.labelKey]}
             </h2>
             <p className="mt-1 text-[12px] text-ink-faint">
-              {config.count} {t.verificationCenter.pendingRequests}
+               {config.key === 'identity'
+                ? identityMeta.total
+                : config.count}{' '}
+               {t.verificationCenter.pendingRequests}
             </p>
           </div>
 
@@ -187,7 +269,7 @@ export function VerificationList({ type }) {
             </label>
           </div>
         </div>
-
+        
         <div className="overflow-x-auto">
           <table className="w-full min-w-[760px]">
             <thead className="bg-surface">
@@ -205,7 +287,25 @@ export function VerificationList({ type }) {
             </thead>
 
             <tbody>
-              {paginatedRequests.length > 0 ? (
+                {isLoading ? (
+                  <tr>
+                    <td
+                      colSpan={activeColumns.length + 1}
+                      className="px-5 py-12 text-center text-sm text-ink-faint"
+                    >
+                      {t.loading}
+                    </td>
+                  </tr>
+                ) : error ? (
+                  <tr>
+                    <td
+                      colSpan={activeColumns.length + 1}
+                      className="px-5 py-12 text-center text-sm text-red-600"
+                    >
+                      {error}
+                    </td>
+                  </tr>
+                ) : paginatedRequests.length > 0 ? (
                   paginatedRequests.map((request) => (
                     <tr
                       key={request.id}
@@ -246,7 +346,7 @@ export function VerificationList({ type }) {
                     </td>
                   </tr>
                 )}
-            </tbody>
+              </tbody>
           </table>
         </div>
 

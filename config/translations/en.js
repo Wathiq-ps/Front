@@ -94,6 +94,13 @@
       
       filter:            'Filter',
       viewDetails:       'View details',
+      processing: 'Processing...',
+      success: 'Success',
+      error: 'Error',
+      fetchError: 'Failed to load identity verification requests. Please try again.',
+      approveSuccess: 'The identity verification request was verified successfully.',
+      rejectSuccess: 'The identity verification request was rejected successfully.',
+      decisionError: 'Unable to complete the verification decision. Please try again.',
       approve: 'Verify request',
       reject: 'Reject request',
       approveConfirmTitle: 'Confirm verification',
@@ -140,7 +147,7 @@
       },
 
       documentTypes: {
-        nationalId:     'National ID',
+        national_id:     'National ID',
         passport:       'Passport',
         residenceCard:  'Residence card',
       },
@@ -162,6 +169,8 @@
       },
 
       detail: {
+        identityType: 'Identity type',
+        submittedAt: 'Submitted date',
         propertyOwner: 'Property owner',
         propertyType: 'Property type',
         area: 'Area',
@@ -173,8 +182,6 @@
         lawyerDocument: 'Lawyer accreditation document',
         licenseDocument: 'Lawyer license',
         
-        identityDetail: 'Identity verification request',
-
         lawyerDetail: 'Lawyer accreditation request',
         licenseNumber: 'License number',
         specialty: 'Specialty',

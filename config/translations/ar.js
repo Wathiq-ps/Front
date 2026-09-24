@@ -94,6 +94,13 @@
       
       filter:            'تصفية',
       viewDetails:       'عرض التفاصيل',
+      processing: 'جاري التنفيذ...',
+      success: 'تم بنجاح',
+      error: 'حدث خطأ',
+      fetchError: 'تعذر تحميل طلبات التحقق من الهوية. يرجى المحاولة مرة أخرى.',
+      approveSuccess: 'تم توثيق طلب التحقق من الهوية بنجاح.',
+      rejectSuccess: 'تم رفض طلب التحقق من الهوية بنجاح.',
+      decisionError: 'تعذر تنفيذ قرار التحقق. يرجى المحاولة مرة أخرى.',     
       approve: 'توثيق الطلب',
       reject: 'رفض الطلب',
       approveConfirmTitle: 'تأكيد توثيق الطلب',
@@ -106,7 +113,6 @@
       reviewDecision: 'قرار التحقق',
       reviewDecisionDescription: 'راجع البيانات والمستندات قبل اتخاذ القرار.',
       pendingSummary: 'إجمالي الطلبات المعلقة',
-      pendingSummary:    'إجمالي الطلبات المعلقة',
       verifiedSummary:   'إجمالي الطلبات الموثقة',
       page:              'صفحة',
       of:                'من',
@@ -141,7 +147,7 @@
       },
 
       documentTypes: {
-        nationalId:     'هوية وطنية',
+        national_id:     'هوية وطنية',
         passport:       'جواز سفر',
         residenceCard:  'بطاقة إقامة',
       },
@@ -163,6 +169,8 @@
       },
       
       detail: {
+        identityType: 'نوع الهوية',
+        submittedAt: 'تاريخ التقديم',
         propertyOwner: 'اسم المالك',
         propertyType: 'نوع العقار',
         area: 'المساحة',
@@ -174,8 +182,6 @@
         lawyerDocument: 'مستند اعتماد المحامي',
         licenseDocument: 'صورة ترخيص المحامي',
         
-        identityDetail: 'مراجعة طلب التحقق من الهوية',
-
         lawyerDetail: 'مراجعة طلب اعتماد المحامي',
         licenseNumber: 'رقم الترخيص',
         specialty: 'التخصص',
@@ -209,10 +215,10 @@
     // Dashboard stats
     activeProperties: 'عقارات نشطة',
     pendingRequests:  'طلبات تحقق معلقة',
-    verifiedUsers:    'مستخدمون مؤتمنون',
+    verifiedUsers:    'مستخدمون موثّقون',
     totalUsers:       'المستخدمون',
     openIssues:       'مشاكل مفتوحة',
-    aiContracts:      'عقود فنشأة بالذكاء الاصطناعي',
+    aiContracts:      'عقود منشأة بالذكاء الاصطناعي',
     monthlyRevenue:   'الإيرادات الشهرية',
     saasCurrent:      'جارية',
 
@@ -258,7 +264,7 @@
     aiMonitorTitle:   'مراقبة الذكاء الاصطناعي',
     aiMonitorSub:     'حالة النظام والمعرفة القانونية (RAG)',
     aiRiskScore:      'متوسط درجة الخطورة',
-    aiContractsGen:   'عقود فنشأة بـ AI',
+    aiContractsGen:   ' عقود مُنشأة بالذكاء الاصطناعي',
     aiUptime:         'وقت تشغيل النظام',
     aiQueries:        'استفسارات هذا الشهر',
     aiKbHealth:       'سلامة قاعدة المعرفة القانونية',
