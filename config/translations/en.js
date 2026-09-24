@@ -147,7 +147,7 @@
       },
 
       documentTypes: {
-        nationalId:     'National ID',
+        national_id:     'National ID',
         passport:       'Passport',
         residenceCard:  'Residence card',
       },

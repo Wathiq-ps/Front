@@ -147,7 +147,7 @@
       },
 
       documentTypes: {
-        id:     'هوية وطنية',
+        national_id:     'هوية وطنية',
         passport:       'جواز سفر',
         residenceCard:  'بطاقة إقامة',
       },
