@@ -1,5 +1,5 @@
 'use client'
-import { Search, Bell, Globe, Menu } from 'lucide-react'
+import { Bell, Globe, Menu } from 'lucide-react'
 import { useLang }    from '@/context/LanguageContext'
 import { useSidebar } from '@/context/SidebarContext'
 
@@ -34,23 +34,6 @@ export function TopBar() {
 
       {/* Separator */}
       <div className="hidden sm:block" style={{ width: 1, height: 28, background: 'var(--color-border)', flexShrink: 0 }} aria-hidden="true" />
-
-      {/* Search */}
-      <div className="topbar-search" role="search" style={{ flex: 1, position: 'relative', maxWidth: 420 }}>
-        <Search size={15} style={{ position: 'absolute', insetInlineEnd: 14, top: '50%', transform: 'translateY(-50%)', color: 'var(--color-ink-faint)', pointerEvents: 'none' }} aria-hidden="true" />
-        <input
-          type="search"
-          placeholder={t.searchPh}
-          aria-label={t.searchPh}
-          style={{
-            width: '100%', border: '1.5px solid var(--color-border)', borderRadius: 12,
-            padding: '10px 44px 10px 16px',
-            fontSize: 13, color: 'var(--color-ink)', background: 'var(--color-surface)',
-            fontFamily: 'var(--font-family-base)', outline: 'none',
-          }}
-          className="placeholder:text-ink-placeholder focus:border-brand-navy focus:bg-white focus:ring-2 focus:ring-brand-navy/10 transition-all"
-        />
-      </div>
 
       <div style={{ flex: 1 }} aria-hidden="true" />
 

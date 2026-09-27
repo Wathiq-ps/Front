@@ -163,8 +163,6 @@ body {
 
 /* Topbar helpers — default desktop */
 .topbar-hamburger { display: none; }
-.topbar-search    { display: flex; }
-
 /* ═══════════════════════════════════════════════════════
    MOBILE BACKDROP
    ═══════════════════════════════════════════════════════ */
@@ -303,7 +301,6 @@ body {
   .logo-full { display: none !important; }
   .logo-icon { display: flex !important; }
 
-  .topbar-search    { display: none  !important; }
   .topbar-hamburger { display: flex  !important; }
 
   .auth-root       { padding: 16px; }

@@ -219,10 +219,7 @@
     aiContracts:      'AI-Generated Contracts',
     monthlyRevenue:   'Monthly Revenue',
     saasCurrent:      'Current',
-
-    // Top bar
-    searchPh:         'Search: contract, property, ref number...',
-
+    
     // Dashboard — Welcome
     welcomeUser:      'Welcome, Admin 👋',
     welcomeDate:      'Monday, August 12, 2026',

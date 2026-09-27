@@ -220,9 +220,6 @@
     monthlyRevenue:   'الإيرادات الشهرية',
     saasCurrent:      'جارية',
 
-    // Top bar
-    searchPh:         'بحث: عقد، عقار، رقم مرجعي...',
-
     // Dashboard — Welcome
     welcomeUser:      'مرحباً، أدمن 👋',
     welcomeDate:      'الإثنين ١٢ أغسطس ٢٠٢٦',
