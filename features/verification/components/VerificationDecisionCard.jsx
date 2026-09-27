@@ -10,6 +10,7 @@ export function VerificationDecisionCard({
   status,
   onApprove,
   onReject,
+  onResultClose,
 }) {
   const { t } = useLang()
 
@@ -238,7 +239,10 @@ export function VerificationDecisionCard({
           role="dialog"
           aria-modal="true"
           aria-labelledby="decision-result-title"
-          onClick={() => setResultModal(null)}
+          onClick={() => {
+            setResultModal(null)
+            onResultClose?.()
+        }}
         >
           <div
             className="w-full max-w-[420px] rounded-xl bg-white p-6 text-center shadow-xl"

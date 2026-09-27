@@ -92,7 +92,6 @@
         lawyers: 'Search by request ID, lawyer name or license number',
       },
       
-      filter:            'Filter',
       viewDetails:       'View details',
       processing: 'Processing...',
       success: 'Success',
@@ -119,7 +118,6 @@
       previousPage:      'Previous',
       nextPage:          'Next',
       pendingRequests:   'requests pending review',
-      filterAll: 'All',
       noResults: 'No matching results found',
 
       columns: {
