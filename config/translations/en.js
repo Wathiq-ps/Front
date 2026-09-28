@@ -16,7 +16,10 @@
       userInitial:    'S',
       close: 'Close',
       cancel: 'Cancel',
+      roles: {
+        admin: 'Administrator',
     },
+  },
 
     // Auth shared
     backToLogin:    'Back to Login',

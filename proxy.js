@@ -10,8 +10,13 @@ export function proxy(request) {
   // Development-only UI preview. Production always requires an access token.
   if (isAuthPreviewEnabled) return NextResponse.next()
 
-  if (request.cookies.get(ACCESS_COOKIE)?.value) return NextResponse.next()
-
+if (
+  request.cookies.get(ACCESS_COOKIE)?.value ||
+  (process.env.NODE_ENV === 'development' &&
+    process.env.WATHIQ_DEV_ADMIN_ACCESS_TOKEN)
+) {
+  return NextResponse.next()
+}
   const loginUrl = new URL('/login', request.url)
   loginUrl.searchParams.set('next', pathname)
   return NextResponse.redirect(loginUrl)
