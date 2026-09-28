@@ -208,20 +208,27 @@ const verifiedCount =
 
       <VerificationTabs identityCount={identityMeta.total}/>
 
-      <Card className="overflow-hidden p-0">
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border px-6 py-5">
+      <Card className="overflow-hidden rounded-2xl p-0">
+        <div className="border-b border-border px-6 py-5">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <h2 className="text-[17px] font-bold text-ink">
-              {t[config.labelKey]}
-            </h2>
+            <div className="flex items-center gap-2">
+              <h2 className="text-[17px] font-bold text-ink">
+                {t[config.labelKey]}
+              </h2>
+
+              <span className="rounded-full bg-brand-navy/5 px-2.5 py-1 text-[10px] font-semibold text-brand-navy">
+                {config.key === 'identity'
+                  ? identityMeta.total
+                  : config.count}
+              </span>
+            </div>
+
             <p className="mt-1 text-[12px] text-ink-faint">
-               {config.key === 'identity'
-                ? identityMeta.total
-                : config.count}{' '}
-               {t.verificationCenter.pendingRequests}
+              {t.verificationCenter.pendingRequests}
             </p>
           </div>
-            <div className="relative w-full sm:w-64">
+            <div className="relative w-full lg:w-72">
               <Search
                 size={16}
                 className="absolute start-3 top-1/2 -translate-y-1/2 text-ink-faint"
@@ -232,11 +239,11 @@ const verifiedCount =
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
                 placeholder={t.verificationCenter.searchPlaceholders[config.key]}
-                className="w-full rounded-lg border border-border bg-background py-2 ps-9 pe-3 text-[12px] text-ink outline-none placeholder:text-ink-faint focus:border-brand-navy"
+                className="h-10 w-full rounded-xl border border-border bg-background py-2 ps-9 pe-3 text-[12px] text-ink outline-none transition-colors placeholder:text-ink-faint focus:border-brand-navy focus:ring-2 focus:ring-brand-navy/10"
               />
             </div>
         </div>
-        
+        </div>
         <div className="overflow-x-auto">
           <table className="w-full min-w-[760px]">
             <thead className="bg-surface">
