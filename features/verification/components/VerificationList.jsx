@@ -150,43 +150,59 @@ const verifiedCount =
         </p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Card className="p-5">
-          <div className="flex items-center justify-between">
+      <div className="grid gap-4 md:grid-cols-2">
+        <Card className="relative overflow-hidden p-5">
+          <div className="absolute inset-y-0 start-0 w-1 bg-brand-gold" />
+
+          <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-[12px] text-ink-faint">
+              <p className="text-[12px] font-medium text-ink-faint">
                 {t.verificationCenter.pendingSummary}
               </p>
 
-              <p className="mt-2 text-[26px] font-bold text-ink">
+              <p className="mt-3 text-[30px] font-bold tracking-tight text-ink">
                 {pendingCount}
+              </p>
+
+              <p className="mt-1 text-[11px] text-ink-faint">
+                {t.verificationCenter.pendingRequests}
               </p>
             </div>
 
-            <Clock3
-              size={22}
-              className="text-brand-gold"
-            />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-gold/10">
+              <Clock3
+                size={19}
+                className="text-brand-gold"
+              />
+            </div>
           </div>
         </Card>
 
-        <Card className="p-5">
-          <div className="flex items-center justify-between">
-              <div>
-                <p className="text-[12px] text-ink-faint">
-                  {t.verificationCenter.verifiedSummary}
-                </p>
+        <Card className="relative overflow-hidden p-5">
+          <div className="absolute inset-y-0 start-0 w-1 bg-emerald-500" />
 
-                <p className="mt-2 text-[26px] font-bold text-ink">
-                  {verifiedCount}
-                </p>
-              </div>
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="text-[12px] font-medium text-ink-faint">
+                {t.verificationCenter.verifiedSummary}
+              </p>
 
+              <p className="mt-3 text-[30px] font-bold tracking-tight text-ink">
+                {verifiedCount}
+              </p>
+
+              <p className="mt-1 text-[11px] text-ink-faint">
+                {t.verificationCenter.success}
+              </p>
+            </div>
+
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10">
               <BadgeCheck
-                size={22}
+                size={19}
                 className="text-emerald-600"
               />
             </div>
+          </div>
         </Card>
       </div>
 
