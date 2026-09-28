@@ -20,7 +20,7 @@ import { VerificationTabs } from './VerificationTabs'
 const ITEMS_PER_PAGE = 5
 
 const SEARCH_FIELDS = {
-  identity: ['id', 'documentNumber', 'email'],
+  identity: ['user'],
   property: ['id', 'name', 'city'],
   lawyers: ['id', 'name', 'licenseNumber'],
 }
@@ -74,14 +74,10 @@ export function VerificationList({ type }) {
 
       const mappedRequests = items.map((item) => ({
         id: item.id,
-        user: item.user?.name ?? '—',
-        documentType: item.document_type,
-        documentNumber: item.document_number ?? '',
+        user: item.user?.name || item.user?.email || item.user?.phone || '—',
+        documentType: item.type ?? '—',
         status: item.status,
         submittedAt: item.submitted_at,
-        email: item.user?.email ?? '',
-        phone: item.user?.phone ?? '',
-        type: item.type,
       }))
       setIdentityRequests(mappedRequests)
     } catch (err) {

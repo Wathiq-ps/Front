@@ -8,7 +8,7 @@ export const verificationRequests = {
       },
       documentType: 'nationalId',
       submittedAt: '2026-08-12T08:18:00+03:00',
-      status: 'pending',
+      status: 'underReview',
       reference: '1092837465',
       details: {
         fullName: 'أحمد محمد',
@@ -29,7 +29,7 @@ export const verificationRequests = {
       },
       documentType: 'passport',
       submittedAt: '2026-08-12T07:54:00+03:00',
-      status: 'pending',
+      status: 'under_review',
       reference: '1091827364',
       details: {
         fullName: 'سارة خالد',
@@ -50,7 +50,7 @@ export const verificationRequests = {
       },
       documentType: 'residenceCard',
       submittedAt: '2026-08-12T07:36:00+03:00',
-      status: 'pending',
+      status: 'under_review',
       reference: '1087264519',
       details: {
         fullName: 'محمد علي',
@@ -79,7 +79,7 @@ export const verificationRequests = {
         en: 'Gaza',
       },
       submittedAt: '2026-08-12T08:12:00+03:00',
-      status: 'pending',
+      status: 'under_review',
       reference: '41029384756',
       details: {
         ownerName: {
@@ -111,7 +111,7 @@ export const verificationRequests = {
         en: 'Khan Younis',
       },
       submittedAt: '2026-08-12T07:41:00+03:00',
-      status: 'pending',
+      status: 'under_review',
       reference: '41028473615',
       details: {
         ownerName: {
@@ -139,7 +139,7 @@ export const verificationRequests = {
       licenseNumber: 'LIC-49201',
       specialty: 'realEstate',
       submittedAt: '2026-08-12T08:05:00+03:00',
-      status: 'pending',
+      status: 'under_review',
       reference: 'LIC-49201',
       details: {
         fullName: 'عبدالله الدوسري',
@@ -158,7 +158,7 @@ export const verificationRequests = {
       licenseNumber: 'LIC-49188',
       specialty: 'contractNotary',
       submittedAt: '2026-08-12T07:36:00+03:00',
-      status: 'pending',
+      status: 'under_review',
       reference: 'LIC-49188',
       details: {
         fullName: 'فهد السالم',
