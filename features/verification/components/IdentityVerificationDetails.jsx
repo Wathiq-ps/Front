@@ -12,11 +12,13 @@ import { VerificationDecisionCard } from './VerificationDecisionCard'
 
 import { VerificationExtractedData } from './VerificationExtractedData'
 
+import { useRouter } from 'next/navigation'
 export function IdentityVerificationDetails({ id }) {
   const { locale, t } = useLang()
   const [request, setRequest] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
+  const router = useRouter()
   useEffect(() => {
     const fetchRequest = async () => {
       try {
@@ -205,7 +207,7 @@ export function IdentityVerificationDetails({ id }) {
             </div>
           </div>
         </Card>
-        <VerificationDecisionCard status={request.status} onApprove={handleApprove} onReject={handleReject}/>    
+        <VerificationDecisionCard status={request.status} onApprove={handleApprove} onReject={handleReject} onResultClose={() => router.replace('/dashboard/verification/identity')}/>    
     </div>
   )
 }
