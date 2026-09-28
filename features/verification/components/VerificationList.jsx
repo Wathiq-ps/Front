@@ -246,17 +246,17 @@ const verifiedCount =
         </div>
         <div className="overflow-x-auto">
           <table className="w-full min-w-[760px]">
-            <thead className="bg-surface">
-              <tr>
+            <thead>
+              <tr className="border-b border-border bg-background">
                 {activeColumns.map((column) => (
                   <th
                     key={column}
-                    className="px-5 py-3 text-start text-[11px] text-ink-faint"
+                    className="px-6 py-3.5 text-start text-[10px] font-semibold uppercase tracking-wide text-ink-faint"
                   >
                     {t.verificationCenter.columns[config.key][column]}
                   </th>
                 ))}
-                <th className="w-24" aria-label={t.verificationCenter.viewDetails}/>
+                <th className="w-28 px-6 py-3.5" aria-label={t.verificationCenter.viewDetails}/>
               </tr>
             </thead>
 
@@ -288,7 +288,7 @@ const verifiedCount =
                       {activeColumns.map((column) => (
                         <td
                           key={column}
-                          className="px-5 py-4 text-[12px] text-ink-muted"
+                          className="px-6 py-4 text-[12px] text-ink-muted"
                         >
                           {renderVerificationCell(
                             config.key,
@@ -299,13 +299,16 @@ const verifiedCount =
                         </td>
                       ))}
 
-                      <td className="px-5 py-4 text-end">
+                      <td className="px-6 py-4 text-end">
                         <Link
                           href={`${config.listHref}/${request.id}`}
-                          className="inline-flex items-center gap-1 text-[12px] font-semibold text-brand-navy hover:underline"
+                          className="group inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-[11px] font-semibold text-brand-navy transition-colors hover:bg-brand-navy/5"
                         >
                           {t.verificationCenter.viewDetails}
-                          <ArrowUpRight size={14} />
+                          <ArrowUpRight
+                            size={14}
+                            className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                          />
                         </Link>
                       </td>
                     </tr>
