@@ -163,7 +163,8 @@
       },
 
       statuses: {
-        pending:        'قيد المراجعة',
+        // pending:        'قيد المراجعة',
+        under_review:        'قيد المراجعة',
         approved:       'موثّق',
         rejected:       'مرفوض',
       },

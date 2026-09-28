@@ -163,7 +163,8 @@
       },
 
       statuses: {
-        pending:        'Under review',
+        // pending:        'Under review',
+        under_review:        'Under review',
         approved:       'Verified',
         rejected:       'Rejected',
       },
