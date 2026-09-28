@@ -11,9 +11,7 @@
       switchToEnglish:'Switch to English',
       switchToArabic: 'Switch to Arabic',
       notifications:  'Notifications',
-      userName:       'Abdullah Ahmed',
-      userRole:       'Senior Admin',
-      userInitial:    'S',
+
       close: 'Close',
       cancel: 'Cancel',
       roles: {

@@ -28,10 +28,23 @@ export async function refreshSession() {
   return response.json().catch(() => ({}))
 }
 
+let sessionPromise = null
 export async function getSession() {
-  const response = await fetch('/api/auth/session', { credentials: 'include', cache: 'no-store' })
-  if (!response.ok) return null
-  return response.json().catch(() => null)
+  if (!sessionPromise) {
+    sessionPromise = fetch('/api/auth/session', {
+      credentials: 'include',
+      cache: 'no-store'
+    })
+      .then(async response => {
+        if (!response.ok) return null
+        return response.json().catch(() => null)
+      })
+      .finally(() => {
+        sessionPromise = null
+      })
+  }
+
+  return sessionPromise
 }
 
 export async function logout() {

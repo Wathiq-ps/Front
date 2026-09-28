@@ -11,9 +11,6 @@
       switchToEnglish:'التبديل إلى الإنجليزية',
       switchToArabic: 'التبديل إلى العربية',
       notifications:  'الإشعارات',
-      userName:       'عبد الله أحمد',
-      userRole:       'مسؤول أول',
-      userInitial:    'س',
       close: 'إغلاق',
       cancel: 'إلغاء',
 
