@@ -92,7 +92,6 @@
         lawyers: 'بحث برقم الطلب أو اسم المحامي أو رقم الترخيص',
       },
       
-      filter:            'تصفية',
       viewDetails:       'عرض التفاصيل',
       processing: 'جاري التنفيذ...',
       success: 'تم بنجاح',
@@ -119,7 +118,6 @@
       previousPage:      'السابق',
       nextPage:          'التالي',
       pendingRequests:   'طلبًا بانتظار المراجعة',
-      filterAll: 'الكل',
       noResults: 'لا توجد نتائج مطابقة',
 
       columns: {
@@ -222,9 +220,6 @@
     aiContracts:      'عقود منشأة بالذكاء الاصطناعي',
     monthlyRevenue:   'الإيرادات الشهرية',
     saasCurrent:      'جارية',
-
-    // Top bar
-    searchPh:         'بحث: عقد، عقار، رقم مرجعي...',
 
     // Dashboard — Welcome
     welcomeUser:      'مرحباً، أدمن 👋',

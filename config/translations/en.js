@@ -92,7 +92,6 @@
         lawyers: 'Search by request ID, lawyer name or license number',
       },
       
-      filter:            'Filter',
       viewDetails:       'View details',
       processing: 'Processing...',
       success: 'Success',
@@ -119,7 +118,6 @@
       previousPage:      'Previous',
       nextPage:          'Next',
       pendingRequests:   'requests pending review',
-      filterAll: 'All',
       noResults: 'No matching results found',
 
       columns: {
@@ -222,10 +220,7 @@
     aiContracts:      'AI-Generated Contracts',
     monthlyRevenue:   'Monthly Revenue',
     saasCurrent:      'Current',
-
-    // Top bar
-    searchPh:         'Search: contract, property, ref number...',
-
+    
     // Dashboard — Welcome
     welcomeUser:      'Welcome, Admin 👋',
     welcomeDate:      'Monday, August 12, 2026',

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { ArrowUpRight, Search, SlidersHorizontal, BadgeCheck, Clock3 } from 'lucide-react'
+import { ArrowUpRight, Search, BadgeCheck, Clock3 } from 'lucide-react'
 import { verificationRequests } from '@/features/verification/data/verificationMock'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
@@ -28,9 +28,7 @@ const SEARCH_FIELDS = {
 export function VerificationList({ type }) {
   const { locale, t } = useLang()
   const [currentPage, setCurrentPage] = useState(1)
-  const [searchQuery, setSearchQuery] = useState('')
-  const [statusFilter, setStatusFilter] = useState('all')
-  
+  const [searchQuery, setSearchQuery] = useState('')  
   const [identityRequests, setIdentityRequests] = useState([])
   const [identityMeta, setIdentityMeta] = useState({
     total: 0,
@@ -77,7 +75,8 @@ export function VerificationList({ type }) {
       const mappedRequests = items.map((item) => ({
         id: item.id,
         user: item.user?.name ?? '—',
-        documentType: item.type,
+        documentType: item.document_type,
+        documentNumber: item.document_number ?? '',
         status: item.status,
         submittedAt: item.submitted_at,
         email: item.user?.email ?? '',
@@ -105,17 +104,12 @@ export function VerificationList({ type }) {
   const query = searchQuery.trim().toLowerCase()
   const searchFields = SEARCH_FIELDS[config.key] ?? []
 
-  const matchesSearch =
+  return (
     !query ||
     searchFields.some((field) =>
-     getSearchableText(request[field]).toLowerCase().includes(query),
+      getSearchableText(request[field]).toLowerCase().includes(query),
     )
-
-  const matchesStatus =
-    statusFilter === 'all' ||
-    request.status === statusFilter
-
-  return matchesSearch && matchesStatus
+  )
 })
   const activeColumns = getVerificationColumns(config.key)
   const totalPages =
@@ -215,59 +209,20 @@ const verifiedCount =
                {t.verificationCenter.pendingRequests}
             </p>
           </div>
-
-          <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
-            <label className="relative">
+            <div className="relative w-full sm:w-64">
               <Search
-                size={15}
-                className="pointer-events-none absolute inset-inline-end-4 top-1/2 -translate-y-1/2 text-ink-faint"
-                aria-hidden="true"
+                size={16}
+                className="absolute start-3 top-1/2 -translate-y-1/2 text-ink-faint"
               />
+
               <input
-                className="w-full rounded-xl border border-border bg-surface py-2.5 pe-14 ps-6 text-[12px] outline-none focus:ring-2 focus:ring-brand-navy/20 sm:w-72 lg:w-80"
-                placeholder={t.verificationCenter.searchPlaceholders[config.key]}
-                aria-label={t.verificationCenter.searchPlaceholders[config.key]}
+                type="text"
                 value={searchQuery}
-                onChange={(event) => {
-                  setSearchQuery(event.target.value) 
-                  setCurrentPage(1) }}
+                onChange={(event) => setSearchQuery(event.target.value)}
+                placeholder={t.verificationCenter.searchPlaceholders[config.key]}
+                className="w-full rounded-lg border border-border bg-background py-2 ps-9 pe-3 text-[12px] text-ink outline-none placeholder:text-ink-faint focus:border-brand-navy"
               />
-            </label>
-
-            <label className="relative">
-              <SlidersHorizontal
-                size={15}
-                className="pointer-events-none absolute inset-inline-end-4 top-1/2 -translate-y-1/2 text-ink-faint"
-                aria-hidden="true"
-              />
-
-              <select
-                value={statusFilter}
-                onChange={(event) => {
-                  setStatusFilter(event.target.value)
-                  setCurrentPage(1)
-                }}
-                aria-label={t.verificationCenter.filter}
-                className="w-full appearance-none rounded-xl border border-border bg-surface py-2.5 pe-14 ps-6 text-[12px] text-ink outline-none focus:ring-2 focus:ring-brand-navy/20 sm:w-40"
-              >
-                <option value="all">
-                  {t.verificationCenter.filterAll}
-                </option>
-
-                <option value="pending">
-                  {t.verificationCenter.statuses.pending}
-                </option>
-
-                <option value="approved">
-                  {t.verificationCenter.statuses.approved}
-                </option>
-
-                <option value="rejected">
-                  {t.verificationCenter.statuses.rejected}
-                </option>
-              </select>
-            </label>
-          </div>
+            </div>
         </div>
         
         <div className="overflow-x-auto">
