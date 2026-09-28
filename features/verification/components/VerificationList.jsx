@@ -150,62 +150,85 @@ const verifiedCount =
         </p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Card className="p-5">
-          <div className="flex items-center justify-between">
+      <div className="grid gap-4 md:grid-cols-2">
+        <Card className="relative overflow-hidden p-5">
+          <div className="absolute inset-y-0 start-0 w-1 bg-brand-gold" />
+
+          <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-[12px] text-ink-faint">
+              <p className="text-[12px] font-medium text-ink-faint">
                 {t.verificationCenter.pendingSummary}
               </p>
 
-              <p className="mt-2 text-[26px] font-bold text-ink">
+              <p className="mt-3 text-[30px] font-bold tracking-tight text-ink">
                 {pendingCount}
+              </p>
+
+              <p className="mt-1 text-[11px] text-ink-faint">
+                {t.verificationCenter.pendingRequests}
               </p>
             </div>
 
-            <Clock3
-              size={22}
-              className="text-brand-gold"
-            />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-gold/10">
+              <Clock3
+                size={19}
+                className="text-brand-gold"
+              />
+            </div>
           </div>
         </Card>
 
-        <Card className="p-5">
-          <div className="flex items-center justify-between">
-              <div>
-                <p className="text-[12px] text-ink-faint">
-                  {t.verificationCenter.verifiedSummary}
-                </p>
+        <Card className="relative overflow-hidden p-5">
+          <div className="absolute inset-y-0 start-0 w-1 bg-emerald-500" />
 
-                <p className="mt-2 text-[26px] font-bold text-ink">
-                  {verifiedCount}
-                </p>
-              </div>
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="text-[12px] font-medium text-ink-faint">
+                {t.verificationCenter.verifiedSummary}
+              </p>
 
+              <p className="mt-3 text-[30px] font-bold tracking-tight text-ink">
+                {verifiedCount}
+              </p>
+
+              <p className="mt-1 text-[11px] text-ink-faint">
+                {t.verificationCenter.success}
+              </p>
+            </div>
+
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10">
               <BadgeCheck
-                size={22}
+                size={19}
                 className="text-emerald-600"
               />
             </div>
+          </div>
         </Card>
       </div>
 
       <VerificationTabs identityCount={identityMeta.total}/>
 
-      <Card className="overflow-hidden p-0">
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border px-6 py-5">
+      <Card className="overflow-hidden rounded-2xl p-0">
+        <div className="border-b border-border px-6 py-5">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <h2 className="text-[17px] font-bold text-ink">
-              {t[config.labelKey]}
-            </h2>
+            <div className="flex items-center gap-2">
+              <h2 className="text-[17px] font-bold text-ink">
+                {t[config.labelKey]}
+              </h2>
+
+              <span className="rounded-full bg-brand-navy/5 px-2.5 py-1 text-[10px] font-semibold text-brand-navy">
+                {config.key === 'identity'
+                  ? identityMeta.total
+                  : config.count}
+              </span>
+            </div>
+
             <p className="mt-1 text-[12px] text-ink-faint">
-               {config.key === 'identity'
-                ? identityMeta.total
-                : config.count}{' '}
-               {t.verificationCenter.pendingRequests}
+              {t.verificationCenter.pendingRequests}
             </p>
           </div>
-            <div className="relative w-full sm:w-64">
+            <div className="relative w-full lg:w-72">
               <Search
                 size={16}
                 className="absolute start-3 top-1/2 -translate-y-1/2 text-ink-faint"
@@ -216,24 +239,24 @@ const verifiedCount =
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
                 placeholder={t.verificationCenter.searchPlaceholders[config.key]}
-                className="w-full rounded-lg border border-border bg-background py-2 ps-9 pe-3 text-[12px] text-ink outline-none placeholder:text-ink-faint focus:border-brand-navy"
+                className="h-10 w-full rounded-xl border border-border bg-background py-2 ps-9 pe-3 text-[12px] text-ink outline-none transition-colors placeholder:text-ink-faint focus:border-brand-navy focus:ring-2 focus:ring-brand-navy/10"
               />
             </div>
         </div>
-        
+        </div>
         <div className="overflow-x-auto">
           <table className="w-full min-w-[760px]">
-            <thead className="bg-surface">
-              <tr>
+            <thead>
+              <tr className="border-b border-border bg-background">
                 {activeColumns.map((column) => (
                   <th
                     key={column}
-                    className="px-5 py-3 text-start text-[11px] text-ink-faint"
+                    className="px-6 py-3.5 text-start text-[10px] font-semibold uppercase tracking-wide text-ink-faint"
                   >
                     {t.verificationCenter.columns[config.key][column]}
                   </th>
                 ))}
-                <th className="w-24" aria-label={t.verificationCenter.viewDetails}/>
+                <th className="w-28 px-6 py-3.5" aria-label={t.verificationCenter.viewDetails}/>
               </tr>
             </thead>
 
@@ -265,7 +288,7 @@ const verifiedCount =
                       {activeColumns.map((column) => (
                         <td
                           key={column}
-                          className="px-5 py-4 text-[12px] text-ink-muted"
+                          className="px-6 py-4 text-[12px] text-ink-muted"
                         >
                           {renderVerificationCell(
                             config.key,
@@ -276,13 +299,16 @@ const verifiedCount =
                         </td>
                       ))}
 
-                      <td className="px-5 py-4 text-end">
+                      <td className="px-6 py-4 text-end">
                         <Link
                           href={`${config.listHref}/${request.id}`}
-                          className="inline-flex items-center gap-1 text-[12px] font-semibold text-brand-navy hover:underline"
+                          className="group inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-[11px] font-semibold text-brand-navy transition-colors hover:bg-brand-navy/5"
                         >
                           {t.verificationCenter.viewDetails}
-                          <ArrowUpRight size={14} />
+                          <ArrowUpRight
+                            size={14}
+                            className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                          />
                         </Link>
                       </td>
                     </tr>

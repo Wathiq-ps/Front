@@ -16,7 +16,11 @@
       userInitial:    'س',
       close: 'إغلاق',
       cancel: 'إلغاء',
+
+      roles: {
+        admin: 'مدير النظام',
     },
+  },
 
     // Auth shared
     backToLogin:    'العودة إلى تسجيل الدخول',

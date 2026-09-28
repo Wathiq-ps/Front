@@ -1,19 +1,36 @@
 'use client'
 import { Bell, Globe, Menu } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { getSession } from '@/features/auth/services/authService'
+
 import { useLang }    from '@/context/LanguageContext'
 import { useSidebar } from '@/context/SidebarContext'
 
 export function TopBar() {
   const { t, locale, toggleLanguage } = useLang()
   const { toggleMobile } = useSidebar()
-  const isRtl = t.dir === 'rtl'
+  const [admin, setAdmin] = useState(null)
+  
+  useEffect(() => {
 
+    const loadSession = async () => {
+      const session = await getSession()
+      setAdmin(session?.user ?? null)
+    }
+
+    loadSession()
+  }, [])
+  const adminName = admin?.name || admin?.email || 'Admin'
+  const adminInitial = adminName.charAt(0).toUpperCase()
+  const adminRole = admin?.role
+    ? t.common.roles?.[admin.role] || admin.role
+    : ''
   return (
     <header className="topbar" role="banner">
 
       {/* Hamburger — mobile only */}
       <button
-        className="topbar-hamburger items-center justify-center"
+        className="topbar-hamburger h-[38px] w-[38px] items-center justify-center rounded-[10px] border-0 bg-transparent text-ink-muted transition-colors hover:bg-surface"
         onClick={toggleMobile}
         aria-label={t.common.openMenu}
         style={{ width: 38, height: 38, borderRadius: 10, color: 'var(--color-ink-muted)', border: 'none', background: 'transparent', cursor: 'pointer', display: 'none', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}
@@ -22,28 +39,39 @@ export function TopBar() {
       </button>
 
       {/* User */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0 }}>
-        <div style={{ width: 38, height: 38, borderRadius: '50%', background: 'var(--color-brand-navy)', color: 'var(--color-white)', fontSize: 14, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-family-base)', boxShadow: '0 2px 8px rgba(0,35,102,.2)' }} aria-hidden="true">
-          {t.common.userInitial}
+      <div className="flex shrink-0 items-center gap-3">
+        <div
+          className="flex h-[38px] w-[38px] items-center justify-center rounded-full bg-brand-navy text-sm font-bold text-white shadow-[0_2px_8px_rgba(0,35,102,.2)]"
+          aria-hidden="true"
+        >
+          {adminInitial}
         </div>
-        <div className="hidden sm:block" style={{ lineHeight: 1.3 }}>
-          <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--color-ink)', fontFamily: 'var(--font-family-base)' }}>{t.common.userName}</div>
-          <div style={{ fontSize: 12, color: 'var(--color-ink-faint)', fontFamily: 'var(--font-family-base)' }}>{t.common.userRole}</div>
+
+        <div className="hidden sm:block leading-[1.3]">
+          <div className="text-[13px] font-semibold text-ink">
+            {adminName}
+          </div>
+
+          <div className="mt-0.5 text-[11px] text-ink-faint">
+            {adminRole}
+          </div>
         </div>
       </div>
 
       {/* Separator */}
-      <div className="hidden sm:block" style={{ width: 1, height: 28, background: 'var(--color-border)', flexShrink: 0 }} aria-hidden="true" />
+      <div className="hidden h-7 w-px shrink-0 bg-border sm:block" aria-hidden="true" />
 
-      <div style={{ flex: 1 }} aria-hidden="true" />
+      <div className="flex-1" aria-hidden="true" />
 
       {/* Language */}
       <button
-        onClick={toggleLanguage}
-        aria-label={locale === 'ar' ? t.common.switchToEnglish : t.common.switchToArabic}
-        style={{ display: 'flex', alignItems: 'center', gap: 6, border: '1.5px solid var(--color-border)', borderRadius: 10, padding: '8px 14px', fontSize: 13, fontWeight: 600, color: 'var(--color-ink-muted)', background: 'var(--color-white)', cursor: 'pointer', fontFamily: 'var(--font-family-base)', flexShrink: 0, transition: 'all 150ms' }}
-        onMouseEnter={e => e.currentTarget.style.background = 'var(--color-surface)'}
-        onMouseLeave={e => e.currentTarget.style.background = 'var(--color-white)'}
+        onClick={toggleLanguage}xx
+        aria-label={
+          locale === 'ar'
+            ? t.common.switchToEnglish
+            : t.common.switchToArabic
+        }
+        className="flex h-10 shrink-0 items-center gap-1.5 rounded-[10px] border-[1.5px] border-border bg-white px-3.5 text-[13px] font-semibold text-ink-muted transition-colors hover:bg-surface"
       >
         <Globe size={14} aria-hidden="true" />
         {locale === 'ar' ? 'EN' : 'ع'}
@@ -52,12 +80,14 @@ export function TopBar() {
       {/* Notifications */}
       <button
         aria-label={t.common.notifications}
-        style={{ position: 'relative', width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 10, color: 'var(--color-ink-muted)', background: 'transparent', border: 'none', cursor: 'pointer', flexShrink: 0, transition: 'all 150ms' }}
-        onMouseEnter={e => e.currentTarget.style.background = 'var(--color-surface)'}
-        onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+        className="relative flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-[10px] border-0 bg-transparent text-ink-muted transition-colors hover:bg-surface"
       >
         <Bell size={19} aria-hidden="true" />
-        <span style={{ position: 'absolute', top: 7, insetInlineEnd: 7, width: 8, height: 8, borderRadius: '50%', background: 'var(--color-brand-gold)', border: '2px solid var(--color-white)' }} aria-hidden="true" />
+
+        <span
+          className="absolute end-[7px] top-[7px] h-2 w-2 rounded-full border-2 border-white bg-brand-gold"
+          aria-hidden="true"
+        />
       </button>
 
     </header>
