@@ -63,19 +63,25 @@ function NavItem({ item, pathname, t, isRtl }) {
     pathname === item.href ||
     (item.href !== '/dashboard' && pathname.startsWith(item.href))
 
-  return (
-    <div className="sidebar-nav-item">
-      {active && (
-        <span
-          className={cn(
-            'sidebar-nav-indicator',
-            isRtl
-              ? 'sidebar-nav-indicator-rtl'
-              : 'sidebar-nav-indicator-ltr',
-          )}
-          aria-hidden="true"
-        />
+return (
+  <div
+    className={cn(
+      'sidebar-nav-item',
+      isRtl
+        ? 'sidebar-nav-item-rtl'
+        : 'sidebar-nav-item-ltr',
+    )}
+  >
+    <span
+      className={cn(
+        'sidebar-nav-node',
+        active && 'sidebar-nav-node-active',
+        isRtl
+          ? 'sidebar-nav-node-rtl'
+          : 'sidebar-nav-node-ltr',
       )}
+      aria-hidden="true"
+    />
 
       <Link
         href={item.href}
@@ -86,7 +92,9 @@ function NavItem({ item, pathname, t, isRtl }) {
           active && 'sidebar-nav-link-active',
         )}
       >
-        <Icon type={item.icon} active={active} />
+        <span className="sidebar-nav-icon">
+          <Icon type={item.icon} active={active} />
+        </span>
 
         <span className="sidebar-nav-label">
           {t[item.key]}
@@ -164,13 +172,34 @@ export function Sidebar() {
             <div key={gi} className="sidebar-nav-group">
               {/* Group label */}
               {group.groupKey && (
-                <div className="sidebar-nav-group-label" style={{ textAlign: isRtl ? 'right' : 'left' }}>
-                  {t[group.groupKey]}
+                <div
+                  className={cn(
+                    'sidebar-nav-group-label',
+                    isRtl
+                      ? 'sidebar-nav-group-label-rtl'
+                      : 'sidebar-nav-group-label-ltr',
+                  )}
+                >
+                  <span
+                    className="sidebar-nav-group-marker"
+                    aria-hidden="true"
+                  />
+                  <span>{t[group.groupKey]}</span>
                 </div>
               )}
               {/* Items */}
               {group.items.map(item => (
-                <NavItem key={item.key} item={item.key === 'verifyCenter'? { ...item, badge: verificationCount } : item} pathname={pathname} t={t} isRtl={isRtl} />
+                <NavItem
+                  key={item.key}
+                  item={
+                    item.key === 'verifyCenter'
+                      ? { ...item, badge: verificationCount }
+                      : item
+                  }
+                  pathname={pathname}
+                  t={t}
+                  isRtl={isRtl}
+                />
               ))}
             </div>
           ))}
