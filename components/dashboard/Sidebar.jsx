@@ -58,7 +58,7 @@ function Icon({ type, active }) {
 }
 
 /* ── Nav item (inline styles for guaranteed spacing) ── */
-function NavItem({ item, pathname, t, isRtl }) {
+function NavItem({ item, pathname, t, isRtl, closeMobile  }) {
   const active =
     pathname === item.href ||
     (item.href !== '/dashboard' && pathname.startsWith(item.href))
@@ -91,6 +91,7 @@ return (
           'sidebar-nav-link',
           active && 'sidebar-nav-link-active',
         )}
+        onClick={closeMobile}
       >
         <span className="sidebar-nav-icon">
           <Icon type={item.icon} active={active} />
@@ -199,6 +200,7 @@ export function Sidebar() {
                   pathname={pathname}
                   t={t}
                   isRtl={isRtl}
+                  closeMobile={closeMobile}
                 />
               ))}
             </div>
