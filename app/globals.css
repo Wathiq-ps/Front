@@ -283,7 +283,8 @@ body {
   background: transparent;
   transition:
     background-color 150ms ease,
-    color 150ms ease;
+    color 150ms ease,
+    transform 150ms ease;
 }
 .sidebar-nav-item-rtl .sidebar-nav-link {
   direction: rtl;
@@ -295,11 +296,20 @@ body {
 .sidebar-nav-link:hover {
   background: var(--color-sidebar-hover);
   color: var(--color-white);
+  transform: translateX(2px);
+}
+
+.sidebar-nav-item-rtl .sidebar-nav-link:hover {
+  transform: translateX(-2px);
+}
+
+.sidebar-nav-link-active:hover {
+  transform: none;
 }
 
 .sidebar-nav-link-active {
   color: var(--color-white);
-  background: rgba(255, 255, 255, 0.09);
+  background: var(--color-sidebar-active);
   font-weight: 700;
 }
 .sidebar-nav-icon {
