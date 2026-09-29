@@ -59,46 +59,41 @@ function Icon({ type, active }) {
 
 /* ── Nav item (inline styles for guaranteed spacing) ── */
 function NavItem({ item, pathname, t, isRtl }) {
-  const active = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href))
+  const active =
+    pathname === item.href ||
+    (item.href !== '/dashboard' && pathname.startsWith(item.href))
 
   return (
-    <div style={{ position: 'relative', margin: '1px 10px' }}>
-      {/* Active bar */}
+    <div className="sidebar-nav-item">
       {active && (
-        <span style={{
-          position: 'absolute', top: '50%', transform: 'translateY(-50%)',
-          [isRtl ? 'right' : 'left']: 0,
-          width: 3, height: 28, borderRadius: 99, background: 'var(--color-brand-gold)',
-        }} aria-hidden="true" />
+        <span
+          className={cn(
+            'sidebar-nav-indicator',
+            isRtl
+              ? 'sidebar-nav-indicator-rtl'
+              : 'sidebar-nav-indicator-ltr',
+          )}
+          aria-hidden="true"
+        />
       )}
+
       <Link
         href={item.href}
         aria-label={t[item.key]}
-        style={{
-          display: 'flex', alignItems: 'center',
-          flexDirection: isRtl ? 'row' : 'row-reverse',
-          gap: 10, padding: '9px 14px',
-          borderRadius: 12, textDecoration: 'none',
-          fontSize: 13.5, fontWeight: active ? 700 : 500,
-          fontFamily: 'var(--font-family-base)',
-          color: active ? 'var(--color-white)' : 'var(--color-sidebar-text)',
-          background: active ? 'var(--color-sidebar-active)' : 'transparent',
-          transition: 'all 150ms',
-        }}
-        onMouseEnter={e => { if (!active) { e.currentTarget.style.background = 'var(--color-sidebar-hover)'; e.currentTarget.style.color = 'var(--color-white)' } }}
-        onMouseLeave={e => { if (!active) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--color-sidebar-text)' } }}
+        aria-current={active ? 'page' : undefined}
+        className={cn(
+          'sidebar-nav-link',
+          active && 'sidebar-nav-link-active',
+        )}
       >
         <Icon type={item.icon} active={active} />
-        <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', textAlign: isRtl ? 'right' : 'left' }}>
+
+        <span className="sidebar-nav-label">
           {t[item.key]}
         </span>
+
         {item.badge != null && (
-          <span style={{
-            display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-            minWidth: 24, height: 24, padding: '0 6px', borderRadius: 99,
-            background: 'var(--color-brand-gold)', color: 'var(--color-brand-navy)',
-            fontSize: 11, fontWeight: 800, fontFamily: 'var(--font-family-base)', flexShrink: 0,
-          }}>
+          <span className="sidebar-nav-badge">
             {item.badge}
           </span>
         )}
@@ -151,7 +146,7 @@ export function Sidebar() {
         aria-label={t.common.sidebarNavigation}
       >
         {/* ── Logo ── */}
-        <div style={{ height: 76, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 20px', borderBottom: '1px solid var(--color-sidebar-border)', flexShrink: 0 }}>
+        <div className="sidebar-logo">
           <span className="logo-full">
             <WathiqLogo variant="full" size="md" />
           </span>
@@ -162,23 +157,14 @@ export function Sidebar() {
 
         {/* ── Nav ── */}
         <nav
-          style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', padding: '8px 0' }}
+          className="sidebar-nav"
           aria-label={t.common.navigation}
         >
           {NAV_GROUPS.map((group, gi) => (
-            <div key={gi} style={{ marginBottom: 4 }}>
+            <div key={gi} className="sidebar-nav-group">
               {/* Group label */}
               {group.groupKey && (
-                <div style={{
-                  padding: '16px 22px 6px',
-                  fontSize: 10.5, fontWeight: 700,
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase',
-                  color: 'var(--color-sidebar-muted)',
-                  fontFamily: 'var(--font-family-base)',
-                  textAlign: isRtl ? 'right' : 'left',
-                  userSelect: 'none',
-                }}>
+                <div className="sidebar-nav-group-label" style={{ textAlign: isRtl ? 'right' : 'left' }}>
                   {t[group.groupKey]}
                 </div>
               )}
@@ -191,25 +177,18 @@ export function Sidebar() {
         </nav>
 
         {/* ── Divider ── */}
-        <div style={{ height: 1, background: 'var(--color-sidebar-border)', margin: '0 16px' }} />
+        <div className="sidebar-divider" />
 
         {/* ── Logout ── */}
-        <div style={{ padding: '10px 10px 16px' }}>
+        <div className="sidebar-footer">
           <button
             type="button"
             aria-label={t.common.signOut}
-            onClick={async () => { await logout(); window.location.assign('/login') }}
-            style={{
-              display: 'flex', alignItems: 'center',
-              flexDirection: isRtl ? 'row' : 'row-reverse',
-              gap: 10, width: '100%', padding: '9px 14px', borderRadius: 12,
-              fontSize: 13.5, fontWeight: 500, color: 'var(--color-sidebar-text)',
-              fontFamily: 'var(--font-family-base)',
-              background: 'transparent', border: 'none', cursor: 'pointer',
-              transition: 'all 150ms',
+            onClick={async () => {
+              await logout()
+              window.location.assign('/login')
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'var(--color-sidebar-hover)'; e.currentTarget.style.color = 'var(--color-white)' }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--color-sidebar-text)' }}
+            className="sidebar-logout"
           >
             <Icon type="logout" active={false} />
             <span>{t.common.signOut}</span>
