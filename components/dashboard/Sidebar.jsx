@@ -43,7 +43,7 @@ const NAV_GROUPS = [
 /* ── SVG Icons ── */
 function Icon({ type, active }) {
   const c = active ? 'var(--color-white)' : 'var(--color-sidebar-text)'
-  const p = { width: 18, height: 18, viewBox: '0 0 24 24', fill: 'none', stroke: c, strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': true, style: { flexShrink: 0 } }
+  const p = { width: 18, height: 18, viewBox: '0 0 24 24', fill: 'none', stroke: c, strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': true,}
   if (type === 'dashboard') return <svg {...p}><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
   if (type === 'shield')    return <svg {...p}><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7z"/><polyline points="9 12 11 14 15 10"/></svg>
   if (type === 'users')     return <svg {...p}><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75M21 21v-2a4 4 0 0 0-3-3.87"/></svg>
@@ -57,7 +57,7 @@ function Icon({ type, active }) {
   return null
 }
 
-/* ── Nav item (inline styles for guaranteed spacing) ── */
+/* ── Nav item ── */
 function NavItem({ item, pathname, t, isRtl, closeMobile  }) {
   const active =
     pathname === item.href ||
@@ -159,7 +159,7 @@ export function Sidebar() {
           <span className="logo-full">
             <WathiqLogo variant="full" size="md" />
           </span>
-          <span className="logo-icon" style={{ display: 'none' }}>
+          <span className="logo-icon">
             <WathiqLogo variant="icon" size="lg" />
           </span>
         </div>

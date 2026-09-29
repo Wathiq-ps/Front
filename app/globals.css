@@ -163,12 +163,10 @@ body {
 }
 
 .sidebar-nav-group {
-  position: relative;
   margin-bottom: 6px;
 }
 
 .sidebar-nav-group-label {
-  position: relative;
   display: flex;
   align-items: center;
   min-height: 32px;
@@ -238,7 +236,6 @@ body {
   background: var(--color-sidebar-border);
   transition:
     background-color 150ms ease,
-    transform 150ms ease,
     box-shadow 150ms ease;
   z-index: 2;
 }
@@ -268,7 +265,6 @@ body {
   outline-offset: 2px;
 }
 .sidebar-nav-link {
-  position: relative;
   display: flex;
   align-items: center;
   gap: 8px;
