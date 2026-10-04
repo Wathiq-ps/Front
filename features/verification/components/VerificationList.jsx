@@ -21,7 +21,7 @@ const ITEMS_PER_PAGE = 5
 
 const SEARCH_FIELDS = {
   identity: ['user'],
-  property: ['id', 'name', 'city'],
+  property: ['id', 'name', 'city', 'requestOwner'],
   lawyers: ['id', 'name', 'licenseNumber'],
 }
 
@@ -35,6 +35,12 @@ export function VerificationList({ type }) {
     currentPage: 1,
     lastPage: 1,
   })
+  const [propertyRequests, setPropertyRequests] = useState([])
+  const [propertyMeta, setPropertyMeta] = useState({
+    total: 0,
+    currentPage: 1,
+    lastPage: 1,
+  })
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
 
@@ -42,60 +48,110 @@ export function VerificationList({ type }) {
   const requests =
   config.key === 'identity'
     ? identityRequests
-    : (verificationRequests[config.key] ?? []).sort(
-        (a, b) => new Date(a.submittedAt) - new Date(b.submittedAt),
-      )
+    : config.key === 'property'
+      ? propertyRequests
+      : (verificationRequests[config.key] ?? []).sort((a, b) => new Date(a.submittedAt) - new Date(b.submittedAt),)
   useEffect(() => {
-  if (config.key !== 'identity') return
+    if (config.key !== 'identity' && config.key !== 'property') return
 
-  const fetchIdentityRequests = async () => {
-    try {
-      setIsLoading(true)
-      setError(null)
-      const response = await fetch(`/api/verification/identity?page=${currentPage}`,)
+    const fetchVerificationRequests = async () => {
+      try {
+        setIsLoading(true)
+        setError(null)
 
-      if (!response.ok) {
-        throw new Error(`Failed to fetch identity verification requests`)
+        const response = await fetch(
+          `/api/verification/${config.key}?page=${currentPage}`,
+        )
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch ${config.key} verification requests`)
+        }
+
+        const result = await response.json()
+
+        const items = Array.isArray(result)
+          ? result
+          : result.data ?? []
+
+        const meta = result.meta ?? {}
+
+        if (config.key === 'identity') {
+          setIdentityMeta({
+            total: meta.total ?? 0,
+            currentPage: meta.current_page ?? 1,
+            lastPage: meta.last_page ?? 1,
+          })
+
+          setIdentityRequests(
+            items.map((item) => ({
+              id: item.id,
+              user:
+                item.user?.name ||
+                item.user?.email ||
+                item.user?.phone ||
+                '—',
+              documentType: item.type ?? '—',
+              status: item.status,
+              submittedAt: item.submitted_at,
+            })),
+          )
+        }
+
+        if (config.key === 'property') {
+          setPropertyMeta({
+            total: meta.total ?? 0,
+            currentPage: meta.current_page ?? 1,
+            lastPage: meta.last_page ?? 1,
+          })
+
+          setPropertyRequests(
+            items.map((item) => ({
+              id: item.id,
+              requestOwner:
+                item.owner?.name ||
+                item.owner?.email ||
+                item.owner?.phone ||
+                '—',
+              propertyType: item.type ?? '—',
+              area: item.area_sqm,
+              city: item.city ?? '—',
+              submittedAt: item.submitted_at,
+              status: item.status,
+              name: item.title ?? item.reference ?? '—',
+            })),
+          )
+        }
+      } catch (err) {
+        console.error(
+          `Failed to fetch ${config.key} verification requests:`,
+          err,
+        )
+        setError(t.verificationCenter.fetchError)
+
+        if (config.key === 'identity') {
+          setIdentityRequests([])
+          setIdentityMeta({
+            total: 0,
+            currentPage: 1,
+            lastPage: 1,
+          })
+        }
+
+        if (config.key === 'property') {
+          setPropertyRequests([])
+          setPropertyMeta({
+            total: 0,
+            currentPage: 1,
+            lastPage: 1,
+          })
+        }
+      } finally {
+        setIsLoading(false)
       }
-
-      const result = await response.json()
-
-      const items = Array.isArray(result)
-        ? result
-        : result.data ?? []
-
-      if (!Array.isArray(result)) {
-        setIdentityMeta({
-          total: result.meta?.total ?? 0,
-          currentPage: result.meta?.current_page ?? 1,
-          lastPage: result.meta?.last_page ?? 1,
-        })
-      }
-
-      const mappedRequests = items.map((item) => ({
-        id: item.id,
-        user: item.user?.name || item.user?.email || item.user?.phone || '—',
-        documentType: item.type ?? '—',
-        status: item.status,
-        submittedAt: item.submitted_at,
-      }))
-      setIdentityRequests(mappedRequests)
-    } catch (err) {
-      console.error('Failed to fetch identity verification requests:', err)
-      setError(t.verificationCenter.fetchError)
-      setIdentityRequests([])
-
-      setIdentityMeta({
-        total: 0,
-        currentPage: 1,
-        lastPage: 1,
-      })
-    } finally {
-      setIsLoading(false)
     }
-  }
-  fetchIdentityRequests()
-}, [config.key, currentPage,locale])
+
+    fetchVerificationRequests()
+  }, [config.key, currentPage, locale])
   const filteredRequests = requests.filter((request) => {
   const query = searchQuery.trim().toLowerCase()
   const searchFields = SEARCH_FIELDS[config.key] ?? []
@@ -111,13 +167,15 @@ export function VerificationList({ type }) {
   const totalPages =
     config.key === 'identity'
       ? identityMeta.lastPage
-      : Math.max(
+      : config.key === 'property'
+        ? propertyMeta.lastPage
+        :Math.max(
           1,
           Math.ceil(filteredRequests.length / ITEMS_PER_PAGE),
         )
 
   const paginatedRequests =
-    config.key === 'identity'
+    config.key === 'identity' || config.key === 'property'
       ? filteredRequests
       : filteredRequests.slice(
           (currentPage - 1) * ITEMS_PER_PAGE,
@@ -128,7 +186,9 @@ export function VerificationList({ type }) {
 const pendingCount =
   config.key === 'identity'
     ? identityMeta.total
-    : config.count ?? 0
+    : config.key === 'property'
+      ? propertyMeta.total
+      : config.count ?? 0
 
 const verifiedCount =
   config.key === 'identity'
@@ -206,8 +266,11 @@ const verifiedCount =
         </Card>
       </div>
 
-      <VerificationTabs identityCount={identityMeta.total}/>
-
+      <VerificationTabs
+        identityCount={identityMeta.total}
+        propertyCount={propertyMeta.total}
+      />
+      
       <Card className="overflow-hidden rounded-2xl p-0">
         <div className="border-b border-border px-6 py-5">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
@@ -220,7 +283,9 @@ const verifiedCount =
               <span className="rounded-full bg-brand-navy/5 px-2.5 py-1 text-[10px] font-semibold text-brand-navy">
                 {config.key === 'identity'
                   ? identityMeta.total
-                  : config.count}
+                  : config.key === 'property'
+                    ? propertyMeta.total
+                    : config.count}
               </span>
             </div>
 

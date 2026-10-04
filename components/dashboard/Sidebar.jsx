@@ -118,28 +118,36 @@ export function Sidebar() {
   const pathname = usePathname()
   const isRtl    = t.dir === 'rtl'
   const [identityCount, setIdentityCount] = useState(0)
-
+  const [propertyCount, setPropertyCount] = useState(0)
   useEffect(() => {
-    const fetchIdentityCount = async () => {
+    const fetchVerificationCounts = async () => {
       try {
-        const response = await fetch('/api/verification/identity?page=1')
+        const [identityResponse, propertyResponse] = await Promise.all([
+          fetch('/api/verification/identity?page=1'),
+          fetch('/api/verification/property?page=1'),
+        ])
 
-        if (!response.ok) return
+        if (identityResponse.ok) {
+          const identityResult = await identityResponse.json()
+          setIdentityCount(identityResult.meta?.total ?? 0)
+        }
 
-        const result = await response.json()
-
-        setIdentityCount(result.meta?.total ?? 0)
+        if (propertyResponse.ok) {
+          const propertyResult = await propertyResponse.json()
+          setPropertyCount(propertyResult.meta?.total ?? 0)
+        }
       } catch {
         setIdentityCount(0)
+        setPropertyCount(0)
       }
     }
 
-    fetchIdentityCount()
+    fetchVerificationCounts()
   }, [])
   const verificationCount =
-  identityCount +
-  VERIFICATION_TYPES.property.count +
-  VERIFICATION_TYPES.lawyers.count
+    identityCount +
+    propertyCount +
+    VERIFICATION_TYPES.lawyers.count
 
   return (
     <>

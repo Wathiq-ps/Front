@@ -9,7 +9,7 @@ import {
   VERIFICATION_ORDER,
 } from '@/features/verification/config/verification.config'
 
-export function VerificationTabs({ identityCount }) {
+export function VerificationTabs({ identityCount, propertyCount  }) {
   const pathname = usePathname()
   const { t } = useLang()
 
@@ -40,7 +40,7 @@ export function VerificationTabs({ identityCount }) {
             {t[config.labelKey]}
 
             <span className="ms-1 text-[11px] opacity-70">
-              ({type === 'identity' ? identityCount : config.count})
+              ({type === 'identity' ? identityCount: type === 'property' ? propertyCount : config.count})
             </span>
           </Link>
         )
