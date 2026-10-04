@@ -127,7 +127,7 @@ export function VerificationList({ type }) {
 
 const pendingCount =
   config.key === 'identity'
-    ? identityRequests.filter((request) => request.status === 'under_review').length
+    ? identityMeta.total
     : config.count ?? 0
 
 const verifiedCount =
