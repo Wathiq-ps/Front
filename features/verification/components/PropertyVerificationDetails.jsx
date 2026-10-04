@@ -1,28 +1,63 @@
 'use client'
+import { useEffect, useState } from 'react'
 import { useLang } from '@/context/LanguageContext'
-import { verificationRequests } from '@/features/verification/data/verificationMock'
-
 import { VerificationBreadcrumbs } from './VerificationBreadcrumbs'
 import { VerificationDetailHeader } from './VerificationDetailHeader'
 import { VerificationExtractedData } from './VerificationExtractedData'
 import { VerificationDocumentPreview } from './VerificationDocumentPreview'
 import { Card } from '@/components/ui/Card'
-import { VerificationDecisionCard } from './VerificationDecisionCard'
 export function PropertyVerificationDetails({ id }) {
-  const { t, locale } = useLang()
-  const request = verificationRequests.property.find(
-    (item) => item.id === id,
-  )
+  const { t } = useLang()
+  const [request, setRequest] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState(null)
 
-  if (!request) {
+  useEffect(() => {
+    const fetchProperty = async () => {
+      try {
+        setIsLoading(true)
+        setError(null)
+
+        const response = await fetch(`/api/verification/property/${id}`)
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch property verification details')
+        }
+
+        const result = await response.json()
+
+        setRequest(result.data ?? result)
+      } catch (err) {
+        console.error(
+          'Failed to fetch property verification details:',
+          err,
+        )
+        setError(t.verificationCenter.fetchPropertyError)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchProperty()
+  }, [id])
+
+  if (isLoading) {
     return (
       <p className="text-sm text-ink-muted">
-        {t.verificationCenter.noResults}
+        {t.common.loading}
       </p>
     )
   }
 
-  const details = request.details ?? request
+  if (error || !request) {
+    return (
+      <p className="text-sm text-ink-muted">
+        {error ?? t.verificationCenter.noResults}
+      </p>
+    )
+  }
+
+  const document = request.ownership_documents?.[0]
 
   return (
     <div className="flex flex-col gap-5">
@@ -32,13 +67,13 @@ export function PropertyVerificationDetails({ id }) {
       />
 
       <VerificationDetailHeader
-        name={
-            typeof request.name === 'object'
-            ? request.name[locale] ?? request.name.ar
-            : request.name
+        name={request.title ?? request.reference ?? '—'}
+        id={request.reference ?? request.id}
+        status={
+          t.verificationCenter.statuses[request?.status] ??
+          request?.status ??
+          '—'
         }
-        id={request.id}
-        status={t.verificationCenter.statuses[request.status]}
       />
 
       <VerificationExtractedData
@@ -47,60 +82,68 @@ export function PropertyVerificationDetails({ id }) {
           {
             key: 'ownerName',
             label: t.verificationCenter.detail.propertyOwner,
-            value: typeof details.ownerName === 'object'
-              ? details.ownerName[locale] ?? details.ownerName.ar
-              : details.ownerName ?? '—',
+            value: request.owner?.name ?? request.owner?.email ?? '—',
           },
           {
-            key: 'identityNumber',
-            label: t.verificationCenter.detail.identityNumber,
-            value: details.identityNumber ?? '—',
+            key: 'reference',
+            label: t.verificationCenter.detail.propertyReference,
+            value: request.reference ?? '—',
+            dir: 'ltr',
+          },
+          {
+            key: 'district',
+            label: t.verificationCenter.detail.district,
+            value: request.district ?? '—',
+          },                        
+          {
+            key: 'ownerPhone',
+            label: t.verificationCenter.detail.phone,
+            value: request.owner?.phone ?? '—',
             dir: 'ltr',
           },
           {
             key: 'propertyType',
             label: t.verificationCenter.detail.propertyType,
-            value: details.propertyType
-              ? t.verificationCenter.propertyTypes[details.propertyType] ??
-                details.propertyType
-              : '—',
+            value:
+              t.verificationCenter.propertyTypes[request.type] ??
+              request.type ??
+              '—',
           },
           {
             key: 'area',
             label: t.verificationCenter.detail.area,
-            value: details.area
-              ? `${details.area} ${t.verificationCenter.detail.areaUnit}` 
-              : '—',
-           
+            value:
+              request.area_sqm != null
+                ? `${request.area_sqm} ${t.verificationCenter.detail.areaUnit}`
+                : '—',
           },
           {
             key: 'city',
             label: t.verificationCenter.detail.city,
-            value: typeof details.city === 'object'
-              ? details.city[locale] ?? details.city.ar
-              : details.city ?? '—',
+            value: request.city ?? '—',
           },
         ]}
       />
+
       <Card>
         <div className="border-b border-border pb-4">
-            <h2 className="text-[20px] font-bold text-brand-navy">
+          <h2 className="text-[20px] font-bold text-brand-navy">
             {t.verificationCenter.detail.propertyDocument}
-            </h2>
+          </h2>
         </div>
 
         <div className="mt-5">
-            <h3 className="mb-3 text-sm font-semibold text-ink">
+          <h3 className="mb-3 text-sm font-semibold text-ink">
             {t.verificationCenter.detail.propertyDeed}
-            </h3>
+          </h3>
 
-            <VerificationDocumentPreview
-            src={details.documents?.deed}
+          <VerificationDocumentPreview
+            src={document?.file_url}
             alt={t.verificationCenter.detail.propertyDeed}
-            />
+          />
         </div>
-    </Card>
-    <VerificationDecisionCard />    
+      </Card>
+
     </div>
   )
 }

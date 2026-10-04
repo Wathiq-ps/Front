@@ -11,6 +11,11 @@ const nextConfig = {
         hostname: 'wathiq-back.up.railway.app',
         pathname: '/api/v1/admin/kyc/documents/**',
       },
+      {
+        protocol: 'http',
+        hostname: 'wathiq-back.up.railway.app',
+        pathname: '/api/v1/admin/properties/documents/**',
+      },
     ],
   },
 
