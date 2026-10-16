@@ -32,6 +32,7 @@ export function VerificationList({ type }) {
   const [identityRequests, setIdentityRequests] = useState([])
   const [identityMeta, setIdentityMeta] = useState({
     total: 0,
+    approvedTotal: 0,
     currentPage: 1,
     lastPage: 1,
   })
@@ -79,6 +80,7 @@ export function VerificationList({ type }) {
         if (config.key === 'identity') {
           setIdentityMeta({
             total: meta.total ?? 0,
+            approvedTotal: meta.approved_total ?? 0,
             currentPage: meta.current_page ?? 1,
             lastPage: meta.last_page ?? 1,
           })
@@ -133,6 +135,7 @@ export function VerificationList({ type }) {
           setIdentityRequests([])
           setIdentityMeta({
             total: 0,
+            approvedTotal: 0,
             currentPage: 1,
             lastPage: 1,
           })
@@ -193,7 +196,7 @@ const pendingCount =
 
 const verifiedCount =
   config.key === 'identity'
-    ? identityRequests.filter((request) => request.status === 'approved').length
+    ? identityMeta.approvedTotal
     :config.key === 'property'
       ? propertyMeta.approvedTotal
       : Object.values(verificationRequests)
