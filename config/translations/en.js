@@ -89,7 +89,7 @@
 
       searchPlaceholders: {
         identity: 'Search by user ID or name',
-        property: 'Search by request ID, owner name or city',
+        property: 'Search by owner name or city',
         lawyers: 'Search by request ID, lawyer name or license number',
       },
       
@@ -130,7 +130,7 @@
           status:        'Status',
         },
         property: {
-          requestOwner:  'Request ID / Owner',
+          requestOwner:  'Owner',
           propertyType:  'Property type',
           area:          'Area m²',
           city:          'City',

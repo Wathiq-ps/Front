@@ -16,7 +16,7 @@ export async function GET(request) {
     const page = searchParams.get('page') || '1'
 
     const response = await backendFetch(
-      `/api/v1/admin/properties?page=${page}`,
+      `/api/v1/admin/properties/documents?page=${page}`,
       { headers },
     )
 

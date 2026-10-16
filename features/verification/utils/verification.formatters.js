@@ -63,15 +63,9 @@ export const CELL_RENDERERS = {
   },
 
   property: {
-    requestOwner: (request, { locale }) => (
-      <div>
-        <div className="font-semibold text-brand-navy">
-          {request.id}
-        </div>
-
-        <div className="mt-0.5 text-[11px] text-ink-faint">
-          {getLocalizedName(request, locale)}
-        </div>
+    requestOwner: (request) => (
+      <div className="font-semibold text-brand-navy">
+        {request.requestOwner}
       </div>
     ),
 

@@ -89,7 +89,7 @@
       
       searchPlaceholders: {
         identity: 'بحث برقم المستخدم أو الاسم',
-        property: 'بحث برقم الطلب أو اسم المالك أو المدينة',
+        property: 'بحث بـ اسم المالك أو المدينة',
         lawyers: 'بحث برقم الطلب أو اسم المحامي أو رقم الترخيص',
       },
       
@@ -130,7 +130,7 @@
           status:        'الحالة',
         },
         property: {
-          requestOwner:  'رقم الطلب / المالك',
+          requestOwner:  ' المالك',
           propertyType:  'نوع العقار',
           area:          'المساحة م²',
           city:          'المدينة',

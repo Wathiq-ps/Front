@@ -5,13 +5,15 @@ import { VerificationBreadcrumbs } from './VerificationBreadcrumbs'
 import { VerificationDetailHeader } from './VerificationDetailHeader'
 import { VerificationExtractedData } from './VerificationExtractedData'
 import { VerificationDocumentPreview } from './VerificationDocumentPreview'
+import { VerificationDecisionCard } from './VerificationDecisionCard'
 import { Card } from '@/components/ui/Card'
+import { useRouter } from 'next/navigation'
 export function PropertyVerificationDetails({ id }) {
   const { t } = useLang()
   const [request, setRequest] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
-
+  const router = useRouter()  
   useEffect(() => {
     const fetchProperty = async () => {
       try {
@@ -40,7 +42,87 @@ export function PropertyVerificationDetails({ id }) {
 
     fetchProperty()
   }, [id])
+  const handleApprove = async () => {
+    const document = request?.ownership_documents?.[0]
 
+    if (!document?.id) {
+      throw new Error('Property ownership document is not available.')
+    }
+
+    const response = await fetch(
+      `/api/verification/property/document/${document.id}/approve`,
+      {
+        method: 'POST',
+      },
+    )
+
+    const result = await response.json().catch(() => ({}))
+
+    if (!response.ok) {
+      throw new Error(
+        result.message || 'Failed to approve property verification.',
+      )
+    }
+
+    const updatedDocument = result.data ?? result
+
+    setRequest((current) =>
+      current
+        ? {
+            ...current,
+            ownership_documents: current.ownership_documents?.map(
+              (item) =>
+                item.id === updatedDocument.id
+                  ? updatedDocument
+                  : item,
+            ),
+          }
+        : current,
+    )
+  }
+
+  const handleReject = async (reason) => {
+    const document = request?.ownership_documents?.[0]
+
+    if (!document?.id) {
+      throw new Error('Property ownership document is not available.')
+    }
+
+    const response = await fetch(
+      `/api/verification/property/document/${document.id}/reject`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ reason }),
+      },
+    )
+
+    const result = await response.json().catch(() => ({}))
+
+    if (!response.ok) {
+      throw new Error(
+        result.message || 'Failed to reject property verification.',
+      )
+    }
+
+    const updatedDocument = result.data ?? result
+
+    setRequest((current) =>
+      current
+        ? {
+            ...current,
+            ownership_documents: current.ownership_documents?.map(
+              (item) =>
+                item.id === updatedDocument.id
+                  ? updatedDocument
+                  : item,
+            ),
+          }
+        : current,
+    )
+  }
   if (isLoading) {
     return (
       <p className="text-sm text-ink-muted">
@@ -68,10 +150,10 @@ export function PropertyVerificationDetails({ id }) {
 
       <VerificationDetailHeader
         name={request.title ?? request.reference ?? '—'}
-        id={request.reference ?? request.id}
+        id={request.id ?? "—"}
         status={
-          t.verificationCenter.statuses[request?.status] ??
-          request?.status ??
+          t.verificationCenter.statuses[document?.status] ??
+          document?.status ??
           '—'
         }
       />
@@ -143,7 +225,12 @@ export function PropertyVerificationDetails({ id }) {
           />
         </div>
       </Card>
-
+      <VerificationDecisionCard
+        status={document?.status}
+        onApprove={handleApprove}
+        onReject={handleReject}
+        onResultClose={() => router.replace('/dashboard/verification/property')}
+      />
     </div>
   )
 }

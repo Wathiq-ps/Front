@@ -21,7 +21,7 @@ const ITEMS_PER_PAGE = 5
 
 const SEARCH_FIELDS = {
   identity: ['user'],
-  property: ['id', 'name', 'city', 'requestOwner'],
+  property: ['city', 'requestOwner'],
   lawyers: ['id', 'name', 'licenseNumber'],
 }
 
@@ -38,6 +38,7 @@ export function VerificationList({ type }) {
   const [propertyRequests, setPropertyRequests] = useState([])
   const [propertyMeta, setPropertyMeta] = useState({
     total: 0,
+    approvedTotal: 0,
     currentPage: 1,
     lastPage: 1,
   })
@@ -100,24 +101,24 @@ export function VerificationList({ type }) {
         if (config.key === 'property') {
           setPropertyMeta({
             total: meta.total ?? 0,
+            approvedTotal: meta.approved_total ?? 0,
             currentPage: meta.current_page ?? 1,
             lastPage: meta.last_page ?? 1,
           })
 
           setPropertyRequests(
             items.map((item) => ({
-              id: item.id,
+              id: item.property?.id ?? item.id,
               requestOwner:
-                item.owner?.name ||
-                item.owner?.email ||
-                item.owner?.phone ||
+                item.property?.owner?.name ||
+                item.property?.owner?.email ||
+                item.property?.owner?.phone ||
                 '—',
-              propertyType: item.type ?? '—',
-              area: item.area_sqm,
-              city: item.city ?? '—',
+              propertyType: item.property?.title ?? item.type ?? '—',
+              area: item.property?.area_sqm ?? item.area_sqm ?? '—',
+              city: item.property?.city ?? '—',
               submittedAt: item.submitted_at,
-              status: item.status,
-              name: item.title ?? item.reference ?? '—',
+              status:  item.status === 'pending'?'under_review': item.status ?? '—',
             })),
           )
         }
@@ -193,7 +194,9 @@ const pendingCount =
 const verifiedCount =
   config.key === 'identity'
     ? identityRequests.filter((request) => request.status === 'approved').length
-    : Object.values(verificationRequests)
+    :config.key === 'property'
+      ? propertyMeta.approvedTotal
+      : Object.values(verificationRequests)
         .flat()
         .filter((request) => request.status === 'approved').length
 
@@ -347,7 +350,7 @@ const verifiedCount =
                 ) : paginatedRequests.length > 0 ? (
                   paginatedRequests.map((request) => (
                     <tr
-                      key={request.id}
+                      key={request.documentId ?? request.id}
                       className="border-t border-border transition-colors hover:bg-surface/60"
                     >
                       {activeColumns.map((column) => (
