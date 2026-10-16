@@ -65,7 +65,7 @@ export function TopBar() {
 
       {/* Language */}
       <button
-        onClick={toggleLanguage}xx
+        onClick={toggleLanguage}
         aria-label={
           locale === 'ar'
             ? t.common.switchToEnglish

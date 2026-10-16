@@ -89,7 +89,7 @@
       
       searchPlaceholders: {
         identity: 'بحث برقم المستخدم أو الاسم',
-        property: 'بحث برقم الطلب أو اسم المالك أو المدينة',
+        property: 'بحث بـ اسم المالك أو المدينة',
         lawyers: 'بحث برقم الطلب أو اسم المحامي أو رقم الترخيص',
       },
       
@@ -98,6 +98,7 @@
       success: 'تم بنجاح',
       error: 'حدث خطأ',
       fetchError: 'تعذر تحميل طلبات التحقق من الهوية. يرجى المحاولة مرة أخرى.',
+      fetchPropertyError: 'تعذر تحميل طلبات التحقق من ملكية العقار. يرجى المحاولة مرة أخرى.',
       approveSuccess: 'تم توثيق طلب التحقق من الهوية بنجاح.',
       rejectSuccess: 'تم رفض طلب التحقق من الهوية بنجاح.',
       decisionError: 'تعذر تنفيذ قرار التحقق. يرجى المحاولة مرة أخرى.',     
@@ -129,7 +130,7 @@
           status:        'الحالة',
         },
         property: {
-          requestOwner:  'رقم الطلب / المالك',
+          requestOwner:  ' المالك',
           propertyType:  'نوع العقار',
           area:          'المساحة م²',
           city:          'المدينة',
@@ -172,6 +173,8 @@
         identityType: 'نوع الهوية',
         submittedAt: 'تاريخ التقديم',
         propertyOwner: 'اسم المالك',
+        propertyReference: 'مرجع العقار',
+        district: 'الحي',
         propertyType: 'نوع العقار',
         area: 'المساحة',
         areaUnit: 'م²',

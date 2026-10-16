@@ -39,10 +39,3 @@ export function getVerificationConfig(type) {
 export function getVerificationColumns(type) {
   return getVerificationConfig(type).columns
 }
-
-export function getTotalVerificationCount() {
-  return VERIFICATION_ORDER.reduce(
-    (total, type) => total + VERIFICATION_TYPES[type].count,
-    0,
-  )
-}

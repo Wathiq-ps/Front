@@ -89,7 +89,7 @@
 
       searchPlaceholders: {
         identity: 'Search by user ID or name',
-        property: 'Search by request ID, owner name or city',
+        property: 'Search by owner name or city',
         lawyers: 'Search by request ID, lawyer name or license number',
       },
       
@@ -98,6 +98,7 @@
       success: 'Success',
       error: 'Error',
       fetchError: 'Failed to load identity verification requests. Please try again.',
+      fetchPropertyError: 'Failed to load property ownership verification requests. Please try again.',
       approveSuccess: 'The identity verification request was verified successfully.',
       rejectSuccess: 'The identity verification request was rejected successfully.',
       decisionError: 'Unable to complete the verification decision. Please try again.',
@@ -129,7 +130,7 @@
           status:        'Status',
         },
         property: {
-          requestOwner:  'Request ID / Owner',
+          requestOwner:  'Owner',
           propertyType:  'Property type',
           area:          'Area m²',
           city:          'City',
@@ -172,6 +173,8 @@
         identityType: 'Identity type',
         submittedAt: 'Submitted date',
         propertyOwner: 'Property owner',
+        propertyReference: 'Property Reference',
+        district: 'District',
         propertyType: 'Property type',
         area: 'Area',
         areaUnit: 'm²',
