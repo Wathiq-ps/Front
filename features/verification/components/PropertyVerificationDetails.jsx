@@ -140,7 +140,10 @@ export function PropertyVerificationDetails({ id }) {
   }
 
   const document = request.ownership_documents?.[0]
-
+  const normalizedStatus =
+    document?.status === 'pending' || document?.status === 'under_review'
+      ? 'under_review'
+      : document?.status
   return (
     <div className="flex flex-col gap-5">
       <VerificationBreadcrumbs
@@ -152,8 +155,8 @@ export function PropertyVerificationDetails({ id }) {
         name={request.title ?? request.reference ?? '—'}
         id={request.id ?? "—"}
         status={
-          t.verificationCenter.statuses[document?.status] ??
-          document?.status ??
+          t.verificationCenter.statuses[normalizedStatus] ??
+          normalizedStatus ??
           '—'
         }
       />
@@ -226,7 +229,7 @@ export function PropertyVerificationDetails({ id }) {
         </div>
       </Card>
       <VerificationDecisionCard
-        status={document?.status}
+        status={normalizedStatus}
         onApprove={handleApprove}
         onReject={handleReject}
         onResultClose={() => router.replace('/dashboard/verification/property')}

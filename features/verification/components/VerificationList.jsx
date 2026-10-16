@@ -110,17 +110,19 @@ export function VerificationList({ type }) {
 
           setPropertyRequests(
             items.map((item) => ({
+              documentId: item.id,
               id: item.property?.id ?? item.id,
               requestOwner:
                 item.property?.owner?.name ||
                 item.property?.owner?.email ||
                 item.property?.owner?.phone ||
                 '—',
-              propertyType: item.property?.title ?? item.type ?? '—',
-              area: item.property?.area_sqm ?? item.area_sqm ?? '—',
+              propertyType: item.property?.type ?? '—',
+              area: item.property?.area_sqm ?? '—',
               city: item.property?.city ?? '—',
               submittedAt: item.submitted_at,
-              status:  item.status === 'pending'?'under_review': item.status ?? '—',
+              status:  item.status === 'pending' || item.status === 'under_review'? 'under_review': item.status ?? '—',
+
             })),
           )
         }
@@ -145,6 +147,7 @@ export function VerificationList({ type }) {
           setPropertyRequests([])
           setPropertyMeta({
             total: 0,
+            approvedTotal: 0,
             currentPage: 1,
             lastPage: 1,
           })
